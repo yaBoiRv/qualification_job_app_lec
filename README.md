@@ -1,5 +1,5 @@
 # README
-
+# LV
 ## Ievads
 Šis README sniedz instrukcijas par tīmekļa vietnes palaišanu, kas izveidota, izmantojot Ruby on Rails ar Tailwind CSS un PostgreSQL.
 
@@ -77,3 +77,82 @@ Ja jums nepieciešama palīdzība vai atbalsts, apskatiet šos resursus:
 [Tailwind CSS dokumentācija](https://tailwindcss.com/docs/installation)
 
 Šis README nodrošina strukturētu veidu, kā iestatīt, konfigurēt, un palaist Ruby on Rails lietotni, sniedzot visus būtiskos soļus un piezīmes par priekšnosacījumiem. Tas ietver nepieciešamās komandas, lai izveidotu un konfigurētu PostgreSQL datubāzi, instalētu Ruby on Rails, un palaistu lietotni.
+
+# EN
+## Introduction
+This README provides instructions on launching a website built using Ruby on Rails with Tailwind CSS and PostgreSQL.
+
+## Prerequisites
+Lai veiksmīgi palaistu šo Ruby on Rails lietotni, ir nepieciešami šādi priekšnosacījumi:
+
+1. Ruby: Download and install Ruby version '3.2.2'. Ensure Ruby is installed correctly by running ruby -v.
+2. Bundler: Install the bundler gem, which is used for dependency management. Run gem install bundler -v 2.5.3.
+3. PostgreSQL: Install the PostgreSQL database. Make sure it is running and the user has appropriate permissions.
+   - For Windows users: If you're using Windows, consider using a virtual environment or the Windows Subsystem for Linux.
+4. Git: For cloning and version control. Ensure it's installed.
+
+## Installing Ruby on Rails
+
+1. Clone the repository to your computer:
+```javascript
+git clone https://github.com/yaBoiRv/app_lec.git
+```
+2. Move to the application's folder:
+```javascript
+  cd path/to/app_lec
+```
+3. Install the required gems:
+```javascript
+bundle install
+```
+## Setting Up the Database
+
+To prepare the PostgreSQL database:
+
+1. Go to the application's folder:
+```javascript
+cd path/to/app_lec
+```
+2. Create the database if it doesn't already exist:
+```javascript
+rails db:create.
+```
+You can find the database configuration in config/database.yaml.
+3. Perform the database migration to load the initial data structure:
+```javascript
+rails db:migrate
+```
+
+## Launching the Application
+
+To run the Ruby on Rails application:
+
+1. Open a terminal and move to the application's folder:
+```javascript
+cd path/to/app_lec
+```
+2. Start the Rails server:
+```javascript
+bin/dev
+```
+4. Open a web browser and enter the following address to access the website - http://127.0.0.1:3000/
+
+## Potential Improvements
+
+1. Migrate the database to a Docker container.
+2. Include JavaScript libraries in the Rails pipeline (currently using the CDN method).
+3. Create rspec tests.
+
+## Additional Notes
+
+If you encounter problems, check that all prerequisites are met, and ensure the PostgreSQL server is running. For more information about Ruby on Rails, Tailwind CSS, and PostgreSQL, see the official documentation.
+
+## Support and Help
+
+If you need help or support, check these resources:
+
+[Ruby on Rails Documentation](https://guides.rubyonrails.org)
+[PostgreSQL Documentation](https://www.postgresql.org/docs/)
+[Tailwind CSS Documentation](https://tailwindcss.com/docs/installation)
+
+This README provides a structured way to set up, configure, and run a Ruby on Rails application, outlining all essential steps and notes about prerequisites. It includes the necessary commands to create and configure a PostgreSQL database, install Ruby on Rails, and run the application.
