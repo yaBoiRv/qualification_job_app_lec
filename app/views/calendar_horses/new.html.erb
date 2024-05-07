@@ -1,0 +1,3 @@
+<h1><%= @calendar_horse.new_record? ? "New Horse" : "Edit Horse" %></h1>
+<%= render 'form' %>
+<%= link_to 'Back', calendar_group_calendar_horses_path(@calendar_group) %>

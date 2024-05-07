@@ -1,0 +1,8 @@
+<% if @calendar_horse.present? %>
+  <h1><%= @calendar_horse.horse_name %></h1>
+  <p><%= @calendar_horse.description %></p>
+  <%= link_to 'Edit', edit_calendar_group_calendar_horse_path(@calendar_group, @calendar_horse) %> |
+  <%= link_to 'Back', calendar_group_calendar_horses_path(@calendar_group) %>
+<% else %>
+  <p>No horse found.</p>
+<% end %>

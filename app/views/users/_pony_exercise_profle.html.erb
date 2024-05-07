@@ -1,0 +1,67 @@
+<%= javascript_include_tag 'show_exercises' %>
+<div class="border-b border-gray-600 mb-4 pb-4 ml-5 shadow-md" x-data="{ open: false }">
+  <h3 class="font-bold cursor-pointer text-center" @click="open = !open">
+    <%= exercise.title %>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block w-4 h-4 align-middle ml-1">
+      <path fill-rule="evenodd" d="M10 12a1 1 0 0 1-.707-.293l-4-4a1 1 0 0 1 1.414-1.414L10 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-.707.293z" clip-rule="evenodd" />
+    </svg>
+  </h3>
+  <div class="mt-2 ml-auto mr-5" x-show="open" @click.away="open = false" id="exercise_<%= exercise.id %>" style="display: flex; justify-content: center; align-items: center;">
+    <div class=" mb-4 pb-4 mr-5 flex">
+      <div class="mb-4 mt-2 w-full" id="description-container-<%= exercise.id %>">
+        <div class="flex flex-col items-center rounded-lg bg-gray-100 p-4 shadow-md">
+          <strong class="text-bold text-xl underline highlight-text" id="exercise_description">Par novietojumu:</strong>
+          <div id="exercise_description_content_<%= exercise.id %>" class="description-content">
+            <p id="exercise_description_text_<%= exercise.id %>"><%= exercise.description %></p>
+            <!-- Show more/less button -->
+            <% if exercise.description.length > 50 %>
+              <button class="show-more-btn" onclick="toggleDescription('exercise_description_text_<%= exercise.id %>')">Rādīt vairāk</button>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- Canvas Image -->
+      <div class=" w-full" id="canvas_container_<%= exercise.id %>">
+        <div class="image-container border border-black rounded-lg overflow-hidden cursor-pointer" onclick="openPopup(this)">
+          <div class="image-wrapper items-center justify-center">
+            <%= image_tag("mouse-click-icon.svg", alt: "Click button", class: "click w-6 h-6") %>
+            <img class="small-image h-40 max-w-full" src="<%= exercise.canvas_image %>" style="filter: blur(5px);" />
+          </div>
+        </div>
+      </div>
+      <div class="popup-container" style="display: none;">
+        <div class="popup-content relative" data-exercise-name="<%= exercise.title %>">
+          <button class="close-btn bg-gray-500 hover:bg-gray-700 text-white px-2 py-1 rounded-full absolute top-0 right-0 m-2" onclick="closePopup(this)">
+            <%= image_tag("close-x.svg", alt: "Close button", class: "w-6 h-6") %>
+          </button>
+          <img class="full-image" src="" alt="Full Image">
+          <div class="popup-options flex">
+            <button class="print-btn bg-gray-500 hover:bg-gray-700 text-white px-3 py-2 rounded mr-2" onclick="printImage(this)">
+              <%= image_tag("print.svg", alt: "Print button", class: "w-6 h-6") %>
+            </button>
+            <button class="download-btn bg-green-500 hover:bg-green-700 text-white px-3 py-2 rounded" onclick="downloadImage(this)">
+              <%= image_tag("downloads.png", alt: "Rotate left button", class: "w-6 h-6") %>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 items-center" style="display: flex; justify-content: center; width: 100%;">
+      <div >
+        <p class="font-bold mr-2 inline-block">Atzīmēt novietojumu kā:</p>
+        <% if pony_exercises_user.used %>
+          <%= link_to "Izmantots", mark_unused_pony_exercise_path(pony_exercises_user.pony_exercise), method: :get, class: "bg-orange-500 text-white rounded-full py-2 px-4 mr-2 inline-block" %>
+        <% else %>
+          <%= link_to "Neizmantots", mark_used_pony_exercise_path(pony_exercises_user.pony_exercise), method: :get, class: "bg-green-500 text-white rounded-full py-2 px-4 mr-2 inline-block" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="mt-2 items-center w-full" style="display: flex; justify-content: center;">
+      <div>
+        <% if pony_exercises_user.saved%>
+          <%= link_to "Dzēst no profila",  unsave_pony_exercise_path(pony_exercises_user.pony_exercise), method: :get, class: "bg-red-500 text-white rounded-full py-2 px-4" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

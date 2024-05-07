@@ -1,0 +1,59 @@
+<nav class="bg-orange-800 px-4 py-2 w-full md:px-5 md:py-4 flex justify-between items-center sticky top-0 z-10">
+  <!-- Left side with "Sākums" and dropdown for "Par mums" -->
+  <%= link_to "Sākums", welcome_page_path, class: "text-white mr-3 #{active_class(welcome_page_path)} link-overlay" %>
+  <!-- Dropdown for "Par mums" -->
+  <div x-data="{ isOpen: false }" @mouseover="isOpen = true" @mouseleave="isOpen = false" class="relative inline-block">
+    <button @mouseover="isOpen = true" @mouseleave="isOpen = false" class="text-white <%= active_class(about_index_path) %> <%= active_class(contact_index_path) %>" id="profile-dropdown-toggle">
+      <div class="link-overlay">Par mums</div>
+    </button>
+    <div x-show.transition="isOpen" @mouseleave="isOpen = false" class="dropdown-menu absolute bg-white border border-gray-300 rounded-lg shadow-lg" id="profile-dropdown-toggle">
+      <%= link_to "Mūsu stāsts", about_index_path, class: "block px-4 py-2 hover:text-white rounded-lg hover:bg-gray-700" %>
+      <%= link_to "Kontakti", contact_index_path, class: "block px-4 py-2 hover:text-white rounded-lg hover:bg-gray-700" %>
+    </div>
+  </div>
+  <!-- Center side with dynamic links when logged in -->
+  <% if user_signed_in? %>
+    <div class="flex justify-center space-x-10 mx-auto max-w-screen mr-10">
+      <%= link_to "Mani novietojumi", exercises_path, class: "text-white #{active_class(exercises_path)} link-overlay" %>
+      <%= link_to "Visi novietojumi", course_positions_path, class: "text-white #{active_class(show_positions_path)} #{active_class(course_positions_path)} link-overlay" %>
+      <%= link_to "Treniņu kalendāri", calendar_groups_path, class: "text-white #{active_class(calendar_groups_path)} link-overlay" %>
+    </div>
+  <% end %>
+  <!-- Right side with profile, login, and register links -->
+  <div class="flex ml-auto space-x-5 items-center">
+    <% if user_signed_in? %>
+      <div x-data="{ isOpen: false }" @mouseover="isOpen = true" @mouseleave="isOpen = false" class="relative inline-block">
+        <button @mouseover="isOpen = true" @mouseleave="isOpen = false" class="text-white" id="profile-dropdown-toggle">
+          <% if current_user.avatar.url.present? %>
+            <div class="avatar-container avatar-container-hover">
+              <div class="avatar-image" style="background-image: url('<%= current_user.avatar %>')"></div>
+              <% if pending_associations_count(current_user) > 0 %>
+                <span class="notification-count bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center absolute top-5 right-3"><%= pending_associations_count(current_user) %></span>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="avatar-container avatar-container-hover">
+              <div class="avatar-image" style="background-image: url('<%= asset_path("user.png") %>')"></div>
+              <% if pending_associations_count(current_user) > 0 %>
+                <span class="notification-count bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center absolute top-5 right-3"><%= pending_associations_count(current_user) %></span>
+              <% end %>
+            </div>
+          <% end %>
+        </button>
+        <div x-show.transition="isOpen" @mouseleave="isOpen = false" class="dropdown-menu absolute bg-white border border-gray-300 rounded-lg shadow-lg right-0" id="profile-dropdown-toggle">
+          <a class="block px-4 py-2">Sveiki, <%= current_user.name %></a>
+          <%= link_to profile_path, class: "block px-4 py-2 hover:text-white rounded-lg hover:bg-gray-700 flex items-center justify-center relative" do %>
+            Apskatīt profilu
+            <% if pending_associations_count(current_user) > 0 %>
+              <span class="notification-count bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center absolute top-5 right-3"><%= pending_associations_count(current_user) %></span>
+            <% end %>
+          <% end %>
+          <%= link_to 'Izrakstīties', logout_path, class: "block px-4 py-2 hover:text-white rounded-lg hover:bg-red-500" %>
+        </div>
+      <% else %>
+        <%= link_to "Autorizēties", login_path, class: "text-white link-overlay" %>
+        <%= link_to "Reģistrēties", new_user_path, class: "text-white link-overlay" %>
+      <% end %>
+    </div>
+  </nav>
+  <%= stylesheet_link_tag "header" %>

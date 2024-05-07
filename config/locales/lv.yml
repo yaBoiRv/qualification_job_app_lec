@@ -1,0 +1,79 @@
+lv:
+  create_participant_reservation: "Izveidot rezervāciju"
+  activerecord:
+    errors:
+      models:
+        calendar_group:
+          attributes:
+            group_name:
+              taken: "Šis nosaukums jau ir aizņemts"
+              blank: "Nosaukums nevar būt tukšs"
+        exercise:
+          attributes:
+            exercise_name:
+              blank: "Vingrinājuma nosaukums nevar būt tukšs"
+              taken: "Vingrinājuma nosaukums jau ir aizņemts"
+            exercise_description:
+              blank: "Vingrinājuma apraksts nevar būt tukšs"
+
+        participant_reservation:
+          attributes:
+            calendar_participant_id:
+              required: "Nepieciešams norādīt dalībnieku"
+            user_id:
+              required: "Nepieciešams norādīt lietotāju"
+        user:
+          attributes:
+            name:
+              blank: "Vārds nevar būt tukšs"
+            surname:
+              blank: "Uzvārds nevar būt tukšs"
+            username:
+              blank: "Lietotājvārds nevar būt tukšs"
+              taken: "Lietotājvārds jau ir aizņemts"
+            email:
+              blank: "E-pasts nevar būt tukšs"
+              taken: "E-pasts jau ir aizņemts"
+            password:
+              blank: "Parole nevar būt tukša"
+              too_short: "Parole ir pārāk īsa (vismaz %{count} rakstzīmes)"
+            password_confirmation:
+              blank: "Paroles apstiprinājums nevar būt tukšs"
+              confirmation: "Ievadītās paroles nav vienādas"
+      messages:
+        blank: "nevar būt tukšs"
+        too_short: "ir pārāk īss (vismaz %{count} rakstzīmes)"
+
+  user_created: "Lietotājs ir izveidots, lūdzu autorizējaties!"
+  logged_out: "Veiksmīgi izrakstījāties!"
+  logged_in: "Veiksmīga autorizācija. Sveiki, %{name}!"
+  password_not_matching: "Ievadītās paroles nav vienādas"
+  avatar_error: "Profila attēls ir neatbilstošs. Paplašinājums var būt .jpeg vai .jpg"
+  users:
+    login:
+      title: "Pieslēgties"
+      username: "Lietotājvārds"
+      password: "Parole"
+      submit_button: "Pieslēgties"
+    new:
+      register: "Reģistrēties"
+  errors:
+    models:
+      user:
+        attributes:
+          name:
+            blank: "Vārds nevar būt tukšs"
+          surname:
+            blank: "Uzvārds nevar būt tukšs"
+          username:
+            blank: "Lietotājvārds nevar būt tukšs"
+            taken: "Lietotājvārds jau ir aizņemts"
+          email:
+            blank: "E-pasts nevar būt tukšs"
+            taken: "E-pasts jau ir aizņemts"
+          password:
+            blank: "Parole nevar būt tukša"
+            too_short: "Parole ir pārāk īsa (vismaz %{count} rakstzīmes)"
+          password_confirmation:
+            blank: "Paroles apstiprinājums nevar būt tukšs"
+            confirmation: "Ievadītās paroles nav vienādas"

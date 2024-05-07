@@ -1,0 +1,86 @@
+<div id="step-indicators" class="mb-3">
+  <span class="step-indicator">1</span>
+  <span class="step-indicator">2</span>
+</div>
+<%= form_with(model: exercise, local: true, html: { id: "exercise_form" }) do |form| %>
+  <!-- Step 1: SVG Library and name -->
+  <div id="step-1" class="step">
+    <% if @exercise.errors.any? %>
+      <div class="error flex justify-center">
+        <div id="error_explanation" class="bg-red-100 text-center w-1/2 border border-red-400 text-red-700 px-4 mt-5 mb-5 py-3 rounded">
+          <ul>
+            <% @exercise.errors.each do |error| %>
+              <li><%= error.message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <%end%>
+    <div class="field">
+      <div class="field">
+        <%= form.label :exercise_name, "Novietojuma nosaukums", class: "text-black" %>
+        <%= form.text_field :exercise_name,  class: "border-2 rounded-lg px-3 py-2 focus:outline-none focus:border-orange-700 block mx-auto" %>
+      </div>
+      <div class="field">
+        <%= form.label :exercise_description, "Novietojuma apraksts", class: "text-black" %>
+        <%= form.text_area :exercise_description, rows: 5, class: "border-2 rounded-lg px-3 py-2 focus:outline-none focus:border-orange-700 block mx-auto" %>
+      </div>
+      <div id="svg-library" class="flex justify-center draggable-svg">
+        <img src="/assets/exercise_obsctacles/ob-1.svg" alt="ob-1" class="draggable-image w-10 h-10">
+        <img src="/assets/exercise_obsctacles/ob-2.svg" alt="ob-2" class="draggable-image w-20 h-10">
+        <img src="/assets/exercise_obsctacles/ob-3.svg" alt="ob-3" class="draggable-image w-20 h-10">
+        <img src="/assets/exercise_obsctacles/ob-4.svg" alt="ob-4" class="draggable-image w-20 h-10">
+        <img src="/assets/exercise_obsctacles/ob-5.svg" alt="ob-5" class="draggable-image w-20 h-10">
+        <img src="/assets/exercise_obsctacles/arrow.svg" alt="ob-6" class="draggable-image w-15 h-10">
+      </div>
+      <div id="canvas-container" class="flex justify-center">
+        <canvas id="canvas" width="900" height="400" class="border-2 rounded-lg" style="border:1px solid #000000;"></canvas>
+        <div id="buttons-container" class="flex flex-col">
+          <button id="rotateBtnLeft" class="mb-3"><%= image_tag("rotate-left.svg", alt: "Rotate left button", class: "w-6 h-6") %></button>
+          <button id="rotateBtnRight" class="mb-3 mr-3"><%= image_tag("rotate-right.svg", alt: "Rotate right button", class: "w-6 h-6") %></button>
+          <button id="removeBtn" class="mb-3"><%= image_tag("delete.svg", alt: "Delete button", class: "w-6 h-6") %></button>
+          <button id="clearBtn"><%= image_tag("clear.svg", alt: "Clear canvas button", class: "w-6 h-6") %></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= form.hidden_field :canvas_data, id: "canvasDataField" %>
+  <%= form.hidden_field :canvas_image, id: "canvasImageField" %>
+  <!-- Step 2: Animal Type and Exercise Type -->
+  <div id="step-2" class="step hidden">
+    <div class="field">
+      <%= form.label :animal_type, "Kam paredzēts novietojums:", class: "text-black" %>
+      <%= form.select :animal_type, ['Ponijs', 'Zirgs'], {}, { class: 'border-2 rounded-lg px-4 py-2 block focus:outline-none focus:border-orange-700' } %>
+    </div>
+    <div class="field">
+      <%= form.label :exercise_type, "Novietojuma tips:", class: "text-black" %>
+      <%= form.select :exercise_type, [['Maršuts', 'marsuts'], ['Vingrinājums', 'vingrinajums']], {}, { class: 'border-2 rounded-lg px-3 py-2 focus:outline-none block focus:border-orange-700' } %>
+    </div>
+    <div class="field">
+      <%= form.label :public, "Publiskot novietojumu", class: "text-black" %>
+      <%= form.check_box :public, class: "text-black" %>
+    </div>
+    <div class="field">
+      <%= form.label :completed, "Izpildīts novietojums", class: "text-black" %>
+      <%= form.check_box :completed, class: "text-black" %>
+    </div>
+  </div>
+<% end %>
+<!-- Bottom Navigation Buttons -->
+<div id="step-indicators">
+  <div id="bottom-step-indicators" class=""> <!-- Adjusted classes here -->
+    <span class="step-indicator">1</span>
+    <span class="step-indicator">2</span>
+  </div>
+</div>
+<div id="button-container">
+  <button id="prevBtn" type="button" class="bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white">Atpakaļ</button>
+  <button id="nextBtn" type="button" class="bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white">Nākamais</button>
+  <button id="submitBtn" type="button" class="font-bold bg-indigo-600 cursor-pointer text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 ml-5 hidden">Saglabāt</button>
+  <% if @exercise.persisted? %>
+    <%= button_to 'Dzēst', exercise_path(@exercise), method: :delete, id: "delete-exercise", class: "inline-block px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 hover:text-white ml-5" %>
+  <% end %>
+</div>
+<%= stylesheet_link_tag "exercise_form" %>
+<%= javascript_include_tag 'exercise_build' %>
+<%= javascript_include_tag 'page_indicator' %>

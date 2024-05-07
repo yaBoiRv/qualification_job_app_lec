@@ -1,0 +1,164 @@
+<div class="border-b border-gray-200 pb-4 mb-6 flex items-center justify-center">
+  <h1 class="text-2xl font-bold">Jūsu novietojumi</h1>
+</div>
+<% if current_user.horse_exercises_users.present? && current_user.horse_exercises_users.exists?(saved: true) %>
+  <div  class="border-b border-gray-600 mb-4 pb-4 ml-5 shadow-md text-center" x-data="{ open: false, openUsed: false, openUnused: false }">
+    <h2 @click="open = !open" class="font-bold cursor-pointer">Zigu vingrinājumi</h2>
+    <div x-show="open">
+      <!-- Used Horse Exercises -->
+      <% used_horse_exercises = current_user.horse_exercises_users.select { |he| he.used } %>
+      <% if used_horse_exercises.present? %>
+        <h3 class="chosen-text text-green-500 font-bold cursor-pointer" @click="openUsed = !openUsed">Izmantotie</h3>
+        <ul x-show="openUsed">
+          <% used_horse_exercises.each do |horse_exercises_user| %>
+            <li>
+              <div x-data="{ saved: <%= horse_exercises_user.saved %> }" class="mb-4">
+                <p>
+                  <%= render 'horse_exercise_profle', horse_exercises_user: horse_exercises_user, exercise: horse_exercises_user.horse_exercise %>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      <!-- Unused Horse Exercises -->
+      <% unused_horse_exercises = current_user.horse_exercises_users.reject { |he| he.used } %>
+      <% if unused_horse_exercises.present? %>
+        <h3 class="chosen-text font-bold cursor-pointer text-orange-500" @click="openUnused = !openUnused">Neizmantotie</h3>
+        <ul x-show="openUnused">
+          <% unused_horse_exercises.each do |horse_exercises_user| %>
+            <li>
+              <div x-data="{ saved: <%= horse_exercises_user.saved %> }" class="mb-4">
+                <p>
+                  <%= render 'horse_exercise_profle', horse_exercises_user: horse_exercises_user, exercise: horse_exercises_user.horse_exercise %>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<% if current_user.horse_courses_users.present? %>
+  <div class="border-b border-gray-600 mb-4 pb-4 ml-5 shadow-md text-center" x-data="{ open: false, openUsed: false, openUnused: false }">
+    <h2 @click="open = !open" class="font-bold cursor-pointer">Zirgu maršuti</h2>
+    <div x-show="open">
+      <!-- Used Horse Courses -->
+      <% used_horse_courses = current_user.horse_courses_users.select { |hc| hc.used } %>
+      <% if used_horse_courses.present? %>
+        <h3 class="chosen-text text-green-500 font-bold cursor-pointer" @click="openUsed = !openUsed">Izmantotie</h3>
+        <ul x-show="openUsed">
+          <% used_horse_courses.each do |horse_courses_user| %>
+            <li>
+              <div x-data="{ saved: <%= horse_courses_user.saved %> }" class="mb-4">
+                <p>
+                  <%= render 'horse_course_profle', horse_courses_user: horse_courses_user, exercise: horse_courses_user.horse_course %>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      <!-- Unused Horse Courses -->
+      <% unused_horse_courses = current_user.horse_courses_users.reject { |hc| hc.used } %>
+      <% if unused_horse_courses.present? %>
+        <h3 class="chosen-text text-orange-500 font-bold cursor-pointer" @click="openUnused = !openUnused">Neizmantotie</h3>
+        <ul x-show="openUnused">
+          <% unused_horse_courses.each do |horse_courses_user| %>
+            <li>
+              <div x-data="{ saved: <%= horse_courses_user.saved %> }" class="mb-4">
+                <p>
+                  <%= render 'horse_course_profle', horse_courses_user: horse_courses_user, exercise: horse_courses_user.horse_course %>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<% if current_user.pony_exercises_users.present? && current_user.pony_exercises_users.exists?(saved: true) %>
+  <div class="border-b border-gray-600 mb-4 pb-4 ml-5 shadow-md text-center" x-data="{ open: false, openUsed: false, openUnused: false }">
+    <h2 @click="open = !open" class="font-bold cursor-pointer">Poniju vingrinājumi</h2>
+    <div x-show="open">
+      <!-- Used Pony Exercises -->
+      <% used_pony_exercises = current_user.pony_exercises_users.select { |pe| pe.used } %>
+      <% if used_pony_exercises.present? %>
+        <h3 class="chosen-text font-bold cursor-pointer text-green-500" @click="openUsed = !openUsed">Izmantotie</h3>
+        <ul x-show="openUsed">
+          <% used_pony_exercises.each do |pony_exercises_user| %>
+            <li>
+              <div x-data="{ saved: <%= pony_exercises_user.saved %> }" class="mb-4">
+                <p>
+                  <%= render 'pony_exercise_profle', pony_exercises_user: pony_exercises_user, exercise: pony_exercises_user.pony_exercise %>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      <!-- Unused Pony Exercises -->
+      <% unused_pony_exercises = current_user.pony_exercises_users.reject { |pe| pe.used } %>
+      <% if unused_pony_exercises.present? %>
+        <h3 class="chosen-text font-bold cursor-pointer text-orange-500" @click="openUnused = !openUnused">Neizmantotie</h3>
+        <ul x-show="openUnused">
+          <% unused_pony_exercises.each do |pony_exercises_user| %>
+            <li>
+              <div x-data="{ saved: <%= pony_exercises_user.saved %> }" class="mb-4">
+                <p>
+                  <%= render 'pony_exercise_profle', pony_exercises_user: pony_exercises_user, exercise: pony_exercises_user.pony_exercise %>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<% if current_user.pony_courses_users.present? && current_user.pony_courses_users.exists?(saved: true) %>
+  <div class="border-b border-gray-600 mb-4 pb-4 ml-5 shadow-md text-center" x-data="{ open: false, openUsed: false, openUnused: false }">
+    <h2 @click="open = !open" class="font-bold cursor-pointer">Poniju maršuti</h2>
+    <div x-show="open">
+      <!-- Used Pony Courses -->
+      <% used_pony_courses = current_user.pony_courses_users.select { |pc| pc.used } %>
+      <% if used_pony_courses.present? %>
+        <h3 class="chosen-text font-bold cursor-pointer text-green-500" @click="openUsed = !openUsed">Izmantotie</h3>
+        <ul x-show="openUsed">
+          <% used_pony_courses.each do |pony_course_user| %>
+            <% if pony_course_user.saved %>
+              <li>
+                <div x-data="{ saved: <%= pony_course_user.saved %> }" class="mb-4">
+                  <p>
+                    <%= render 'pony_course_profle', pony_course_user: pony_course_user, exercise: pony_course_user.pony_course %>
+                  </p>
+                </div>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+      <!-- Unused Pony Courses -->
+      <% unused_pony_courses = current_user.pony_courses_users.reject { |pc| pc.used } %>
+      <% if unused_pony_courses.present? %>
+        <h3 class="chosen-text font-bold cursor-pointer text-orange-500" @click="openUnused = !openUnused">Neizmantotie</h3>
+        <ul x-show="openUnused">
+          <% unused_pony_courses.each do |pony_course_user| %>
+            <% if pony_course_user.saved %>
+              <li>
+                <div x-data="{ saved: <%= pony_course_user.saved %> }" class="mb-4">
+                  <p>
+                    <%= render 'pony_course_profle', pony_course_user: pony_course_user, exercise: pony_course_user.pony_course %>
+                  </p>
+                </div>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<%= stylesheet_link_tag "profile" %>

@@ -1,0 +1,7 @@
+.chosen-text {
+    transition: transform 0.3s;
+  }
+  
+  .chosen-text:hover {
+    transform: scale(1.1); /* Increase the size as desired */
+  }

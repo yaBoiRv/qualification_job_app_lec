@@ -1,0 +1,33 @@
+<%= form_with(model: user, url: user_path(user), method: :patch, html: { class: 'max-w-sm mx-auto mt-0', local: true }) do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, "Vārds", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :name, class: "form-input w-full focus:outline-none focus:shadow-outline" %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :surname, "Uzvārds", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :surname, class: "form-input w-full focus:outline-none focus:shadow-outline" %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :username, "Lietotājvārds", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :username, class: "form-input w-full focus:outline-none focus:shadow-outline" %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :email, "E-pasts", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.email_field :email, class: "form-input w-full focus:outline-none focus:shadow-outline" %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :avatar,"Profila attēls", class: "block text-gray-700 text-sm font-semibold mb-2" %>
+    <%= form.file_field :avatar, id: "avatar-input", class: "form-input w-full focus:outline-none focus:shadow-outline" %>
+  </div>
+  <div class="flex items-center mb-5">
+    <%= form.submit "Atjaunināt", class: 'bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white transition duration-300 cursor-pointer' %>
+    <%= button_tag "Aizvērt", type: 'button', onclick: 'toggleProfileUpdate()', class: 'bg-red-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2' %>
+  </div>
+<% end %>
+<div id="imagePopup" class="hidden fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+  <div id="imageContainer" class="bg-white p-4 rounded shadow-md">
+    <img id="previewImage" src="#" alt="Preview Image" style="max-width: 300px; max-height: 300px;">
+    <button id="cropButton" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Saglabāt</button>
+  </div>
+</div>
+<%= javascript_include_tag 'new_user' %>

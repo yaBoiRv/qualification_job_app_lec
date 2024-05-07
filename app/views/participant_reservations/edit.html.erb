@@ -1,0 +1,5 @@
+<div id="edit-reservation">
+  <h1 class="text-3xl font-bold mb-4">Rediģēt rezervāciju</h1>
+  <%= render 'form', calendar_group: @calendar_group, reservation: @reservation %>
+  <%= button_to 'Dzēst', calendar_group_participant_reservation_path(@calendar_group, @reservation), method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 w-full rounded cursor-pointer" %>
+</div>

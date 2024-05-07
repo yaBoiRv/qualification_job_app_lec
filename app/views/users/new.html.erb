@@ -1,0 +1,55 @@
+<!-- app/views/users/new.html.erb -->
+<div class="flex items-center justify-center h-full">
+  <%= form_with(model: @user, url: users_path, method: :post, html: { class: 'max-w-sm mx-auto mt-0', local: true }) do |form| %>
+    <% if @user.errors.any? %>
+      <div class="error flex justify-center mr-7">
+        <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 mt-5 mb-5 py-3 rounded relative">
+          <ul>
+            <% @user.errors.each do |error| %>
+              <li><%= error.message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <%end%>
+    <h2 class="text-2xl font-semibold mb-4 mt-4 text-gray-800">Reģistrēties</h2>
+    <div class="mb-4">
+      <label for="user_name" class="block text-gray-700 text-sm font-bold mb-2">Vārds</label>
+      <input type="text" name="user[name]" id="user_name" class="form-input w-full focus:outline-none focus:shadow-outline">
+    </div>
+    <div class="mb-4">
+      <label for="user_surname" class="block text-gray-700 text-sm font-bold mb-2">Uzvārds</label>
+      <input type="text" name="user[surname]" id="user_surname" class="form-input w-full focus:outline-none focus:shadow-outline">
+    </div>
+    <div class="mb-4">
+      <label for="user_username" class="block text-gray-700 text-sm font-bold mb-2">Lietotājvārds</label>
+      <input type="text" name="user[username]" id="user_username" class="form-input w-full focus:outline-none focus:shadow-outline">
+    </div>
+    <div class="mb-4">
+      <label for="user_email" class="block text-gray-700 text-sm font-bold mb-2">E-pasts</label>
+      <input type="email" name="user[email]" id="user_email" class="form-input w-full focus:outline-none focus:shadow-outline">
+    </div>
+    <div class="mb-4">
+      <label for="user_password" class="block text-gray-700 text-sm font-bold mb-2">Parole</label>
+      <input type="password" name="user[password]" id="user_password" class="form-input w-full focus:outline-none focus:shadow-outline">
+    </div>
+    <div class="mb-4">
+      <label for="user_password_confirmation" class="block text-gray-700 text-sm font-bold mb-2">Paroles apstiprinājums</label>
+      <input type="password" name="user[password_confirmation]" id="user_password_confirmation" class="form-input w-full focus:outline-none focus:shadow-outline">
+    </div>
+    <div class="mb-4">
+      <%= form.label :avatar, class: "block text-gray-700 text-sm font-semibold mb-2" %>
+      <%= form.file_field :avatar, id: "avatar-input", class: "form-input w-full focus:outline-none focus:shadow-outline" %>
+    </div>
+    <div class="flex items-center mb-5">
+      <%= form.submit t('.register'), class: 'bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white transition duration-300 cursor-pointer' %>
+    </div>
+  <% end %>
+</div>
+<div id="imagePopup" class="hidden fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+  <div id="imageContainer" class="bg-white p-4 rounded shadow-md">
+    <img id="previewImage" src="#" alt="Preview Image" style="max-width: 300px; max-height: 300px;">
+    <button id="cropButton" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Saglabāt</button>
+  </div>
+</div>
+<%= javascript_include_tag 'new_user' %>

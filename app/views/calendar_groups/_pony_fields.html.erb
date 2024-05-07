@@ -1,0 +1,15 @@
+<!-- _pony_fields.html.erb -->
+<div class="pony-fields">
+  <%= f.fields_for :calendar_ponies, @pony do |pony_form| %>
+    <div class="mb-4">
+      <%= pony_form.label :pony_name, "Pony Name", class: "block text-gray-700 text-lg font-bold mb-2" %>
+      <%= pony_form.text_field :pony_name, class: "shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+    </div>
+    <div class="mb-4">
+      <%= pony_form.label :description, "Description", class: "block text-gray-700 text-lg font-bold mb-2" %>
+      <%= pony_form.text_area :description, class: "shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+    </div>
+    <!-- Button to remove pony field -->
+    <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded remove-pony">Remove Pony</button>
+  <% end %>
+</div>

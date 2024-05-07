@@ -1,0 +1,491 @@
+<%= stylesheet_link_tag "reservation" %>
+<%= javascript_include_tag "show_reservation" %>
+<div class="p-4 rounded-lg">
+  <div class="p-4 flex items-center justify-between">
+    <%= link_to calendar_groups_path, class: "bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white mr-4" do %>
+      <%= image_tag("arrow.svg", alt: "Arrow button", class: "w-6 h-6") %>
+    <% end %>
+    <div class="text-center">
+      <h1 class="text-3xl font-bold mb-6"><%= @calendar_group.group_name %></h1>
+    </div>
+    <div></div>
+  </div>
+  <div class="flex justify-center text-center">
+    <div class="mb-6 mr-6" style="display: inline-block;">
+      <h2 class="text-xl font-bold mb-2">Pieejamie poniji</h2>
+      <% if @calendar_group.calendar_ponies.present? %>
+        <select id="pony-select" class="bg-gray-200">
+          <option  value="default" id="default-value" selected>Apskatīt</option>
+          <% @calendar_group.calendar_ponies.each do |pony| %>
+            <option value="<%= pony.id %>">
+              <%= pony.pony_name %>
+            </option>
+          <% end %>
+        </select>
+      <% else %>
+        <p>Nav pieejamu poniju</p>
+      <% end %>
+      <div id="pony-description-box" class="description-box"></div>
+    </div>
+    <div class="mb-6 mr-6" style="display: inline-block;">
+      <h2 class="text-xl font-bold mb-2">Pieejamie zirgi</h2>
+      <% if @calendar_group.calendar_horses.present? %>
+        <select id="horse-select" class="bg-gray-200">
+          <option  value="default" id="default-value" selected>Apskatīt</option>
+          <% @calendar_group.calendar_horses.each do |horse| %>
+            <option value="<%= horse.id %>">
+              <%= horse.horse_name %>
+            </option>
+          <% end %>
+        </select>
+      <% else %>
+        <p>Nav pieejamu zirgu</p>
+      <% end %>
+      <div id="horse-description-box" class="description-box"></div>
+    </div>
+    <div class="mb-6" style="display: inline-block;">
+      <h2 class="text-xl font-bold mb-2">Grupas dalībnieki:</h2>
+      <% if @calendar_group.users.present? %>
+        <select class="bg-gray-200">
+          <% @calendar_group.users.each do |user| %>
+            <option value="<%= user.id %>">
+              <% if user == current_user %>
+                Jūs
+              <% else %>
+                <%= user.username %>
+              <% end %>
+            </option>
+          <% end %>
+        </select>
+      <% else %>
+        <p>Nav pievienotu dalībnieku</p>
+      <% end %>
+    </div>
+    <div class="mb-6 ml-6" style="display: inline-block;">
+      <% if admin? %>
+        <h2 class="text-xl font-bold mb-2">Rediģēt grupu:</h2>
+        <%= link_to "Rediģēt", edit_calendar_group_path(@calendar_group), class: "bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white" %>
+      <% end %>
+    </div>
+  </div>
+  <% if @calendar_group.parallel_reservation %>
+    <div class="parallel-reservation flex justify-center items-center bg-green-100 border-green-500 text-green-700 py-2 px-4 rounded">Paralēlā rezervācija ir aktīva</div>
+  <%else%>
+    <div class="parallel-reservation flex justify-center items-center bg-green-100 bg-red-100 border-red-500 text-red-700 py-2 px-4 rounded">Paralēlā rezervācija nav aktīva</div>
+  <% end %>
+</div>
+<div class="popup-container" style="display: none;">
+  <div class="popup-content relative">
+    <div class="reservation-details mb-3">
+    </div>
+    <button class="close-btn bg-gray-500 hover:bg-gray-700 text-white px-2 py-1 rounded-full absolute bottom-0 right-5 mb-3" onclick="closePopup(this)">
+      Aizvērt
+    </button>
+  </div>
+</div>
+<div class="calendar-container flex justify-between">
+  <div class="info-container relative">
+    <div class="info-wrapper">
+      <button class="info-button text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900" aria-label="Info">ℹ️</button>
+      <div class="info-text absolute left-5 mb-9 bg-white border border-gray-200 rounded-lg shadow-md p-4 overflow-hidden hidden">
+        <div class="info-text-content overflow-auto">
+          <strong class="block mb-2">Kalendāra lietošanas pamācība</strong>
+          <ol class="list-decimal pl-5">
+            <li>
+              Jauna rezervācija:
+              <ul class="list-disc pl-5">
+                <li>Noklikšķiniet uz datuma.</li>
+                <li>Aizpildiet rezervācijas datus.</li>
+                <li>Nospiediet apstiprināt pogu.</li>
+              </ul>
+            </li>
+            <li class="mt-3">
+              Rediģēt rezervāciju:
+              <ol class="pl-5">
+                <li>
+                  <span>2.1 Parasts lietotājs:</span>
+                  <ul class="list-disc pl-9">
+                    <li>Noklikšķiniet uz rezervācijas, kas ir zaļā krāsa.</li>
+                    <li>Veiciet izmaiņas.</li>
+                    <li>Nospiediet apstiprināt pogu.</li>
+                  </ul>
+                </li>
+                <li>
+                  <span>2.2 Administrators:</span>
+                  <ul class="list-disc pl-9">
+                    <li>Noklikšķiniet uz rezervācijas (gan sarkanās, gan zaļās).</li>
+                    <li>Veiciet izmaiņas.</li>
+                    <li>Nospiediet apstiprināt pogu.</li>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+            <li class="mt-3">
+              Paralēlā rezervācija
+              <ol class="pl-5">
+                <li>
+                  <span>3.1 Aktīva:</span>
+                  <ul class="list-disc pl-9">
+                    <li>Var veikt rezervāciju pārklājoties laikiem ar izvēlēto zirgu vai poniju, tikai tad ja izvēlētais zirgs vai ponijs jau nav laika periodā izvēlēts.</li>
+                  </ul>
+                </li>
+                <li>
+                  <span>2.2 Nav aktīva:</span>
+                  <ul class="list-disc pl-9">
+                    <li>Rezervāciju nevar veikt nekādā gadījumā, ja izvēlētais laiks pārklājas.</li>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+            <li class="mt-3">
+              Lai rediģētu grupu, jānospiež poga "Rediģēt" (spēj tikai kalendāra administrators).
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="current-user-id" style="display: none;">
+    <%= current_user.id %>
+  </div>
+  <div class="center m-4" id="calendar" style="width: 60%; height: 600px;"></div>
+  <div class="new-reservation-container w-1/3 p-4 bg-gray-100" style="width: calc(40% - 2rem); display: none;">
+    <div id="reservation-form-container">
+    </div>
+    <button id="closeReservationForm" class="float-right bottom-0 bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-gray-700 hover:text-white w-full rounded cursor-pointer">Aizvērt</button>
+  </div>
+</div>
+<a href="<%= new_calendar_group_participant_reservation_path(@calendar_group) %>" id="newReservationLink" class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded ml-5" style="display: none;"></a>
+<script>
+  var newReservationLink = document.getElementById('newReservationLink');
+  const reservationForm = document.querySelector('.new-reservation-container');
+  const closeBtn = document.getElementById('closeReservationForm');
+  document.addEventListener('DOMContentLoaded', function() {
+  var currentUserIDElement = document.getElementById('current-user-id');
+    var calendarEl = document.getElementById('calendar');
+    if (currentUserIDElement) {
+      var currentUserID = currentUserIDElement.textContent.trim();
+    }
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'lv',
+      eventSources: [
+        {
+          url: '/calendar_groups/<%= @calendar_group.id %>/reservations.json',
+        }
+      ],
+
+      eventContent: function(arg) {
+        var content = document.createElement('div');
+        var description = arg.event.extendedProps.time_description;
+
+        content.innerHTML = `<div class="fc-time reservation-time">${description}</div>`;
+
+        var horsePonyText = '';
+        var horses = arg.event.extendedProps.horses.join(', ');
+        var ponies = arg.event.extendedProps.ponies.join(', ');
+
+        if (horses) {
+          horsePonyText += 'Zirgs: ' + horses + '; ';
+        }
+        if (ponies) {
+          horsePonyText += 'Ponijs: ' + ponies + '; ';
+        }
+
+        var infoBoxContent = document.createElement('div');
+        infoBoxContent.className = 'info-box-content hidden';
+        infoBoxContent.innerHTML = `
+        <div class="popup-content-header bg-gray-700 text-white px-4 py-2 rounded-t">
+            Rezervācijas informācija
+        </div>
+        <div class="px-4 py-2">
+          <div class="flex justify-between mb-2">
+                <div class="text-gray-700">Datums:</div>
+                <div class="text-gray-900">${arg.event.extendedProps.formatted_date}</div>
+            </div>
+            <div class="flex justify-between mb-2">
+                <div class="text-gray-700">Laiks no:</div>
+                <div class="text-gray-900">${arg.event.extendedProps.start_time}</div>
+            </div>
+            <div class="flex justify-between mb-2">
+                <div class="text-gray-700">Laiks līdz:</div>
+                <div class="text-gray-900">${arg.event.extendedProps.end_time}</div>
+            </div>
+            <div class="flex justify-between mb-2">
+                <div class="text-gray-700">Izveidoja:</div>
+                <div class="text-gray-900">${arg.event.extendedProps.username}</div>
+            </div>
+            ${arg.event.extendedProps.comments ?
+                `<div class="flex justify-between mb-2">
+                    <div class="text-gray-700">Apraksts:</div>
+                    <div class="text-gray-900">${arg.event.extendedProps.comments}</div>
+                </div>` : ''}
+            ${arg.event.extendedProps.horses.length > 0 ?
+                `<div class="flex justify-between mb-2">
+                    <div class="text-gray-700">Rezervētais/tie zirgs/i:</div>
+                    <div class="text-gray-900">
+                        <ul class="list-disc pl-4">
+                            ${arg.event.extendedProps.horses.map(horse => `<li>${horse}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>` : ''}
+            ${arg.event.extendedProps.ponies.length > 0 ?
+                `<div class="flex justify-between mb-2">
+                    <div class="text-gray-700">Rezervētais/tie ponijs/i:</div>
+                    <div class="text-gray-900">
+                        <ul class="list-disc pl-10">
+                            ${arg.event.extendedProps.ponies.map(pony => `<li>${pony}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>` : ''}
+        </div>`;
+
+        content.appendChild(infoBoxContent);
+
+        content.classList.add('border', 'rounded', 'p-2', 'w-full');
+
+        if (currentUserID == arg.event.extendedProps.created_by_id) {
+          content.classList.add('bg-green-200');
+        } else {
+          content.classList.add('bg-red-200');
+        }
+
+        content.addEventListener('click', function() {
+          openReservationPopup(this, arg, infoBoxContent.innerHTML);
+        });
+
+        return { domNodes: [content] };
+      },
+    });
+
+    calendar.render();
+    function showReservationForm(clickedDate) {
+      var currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+      var clickedDateTime = new Date(clickedDate);
+      clickedDateTime.setHours(0, 0, 0, 0);
+
+      if (clickedDateTime < currentDate) {
+          // Show alert for past date
+          alert("Izvēlaties šodienu vai nākotnes dienu");
+      } else {
+          fetch(newReservationLink.href)
+              .then(response => response.text())
+              .then(data => {
+                  // Display reservation form
+                  var formHtml = new DOMParser().parseFromString(data, 'text/html').querySelector('#new-reservation').innerHTML;
+                  document.getElementById('reservation-form-container').innerHTML = formHtml;
+                  // Set the value of date field in the reservation form
+                  var formattedDate = formatDate(clickedDate);
+                  // Display reservation container
+                  initializeFlatpickr();
+                  document.getElementById('reservation_date').value = formattedDate;
+                  document.querySelector('.new-reservation-container').style.display = 'block';
+              })
+              .catch(error => console.error('Error fetching reservation form:', error));
+      }
+  }
+    function formatDate(dateString) {
+      var parts = dateString.split("-");
+      return parts[2] + "." + parts[1] + "." + parts[0];
+  }
+
+  function initializeFlatpickr() {
+      // Get current date and time
+      var currentDate = new Date();
+      var currentHour = currentDate.getHours();
+      var currentMinute = currentDate.getMinutes();
+
+      // Initialize Flatpickr for the date input
+      var dateInput = document.getElementById('reservation_date');
+      var fromInput = document.getElementById('reservation_time_from');
+      var toInput = document.getElementById('reservation_time_to');
+
+      // Initialize Flatpickr for the date input
+      flatpickr(dateInput, {
+          locale: 'lv',
+          dateFormat: "Y-m-d",
+          minDate: "today", // Prevent selection of past dates
+          defaultDate: "today", // Set the default date to today's date
+          onChange: function(selectedDates, dateStr, instance) {
+              var selectedDate = selectedDates[0];
+              var today = new Date();
+              if (selectedDate < today) {
+                  // For past dates, disable time inputs
+                  fromInput._flatpickr.config.minTime = "00:00";
+                  toInput._flatpickr.config.minTime = "00:00";
+                  fromInput.disabled = true;
+                  toInput.disabled = true;
+              } else {
+                  // For future dates, enable time inputs
+                  fromInput.disabled = false;
+                  toInput.disabled = false;
+              }
+          }
+      });
+
+      // Initialize Flatpickr for the time inputs
+      var timeConfig = {
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: "H:i",
+          time_24hr: true
+      };
+
+      flatpickr(fromInput, Object.assign({}, timeConfig, {
+          minTime: (dateInput.value === currentDate.toLocaleDateString('en-CA')) ? `${currentHour}:${currentMinute}` : "00:00"
+      }));
+
+      flatpickr(toInput, Object.assign({}, timeConfig, {
+          minTime: (dateInput.value === currentDate.toLocaleDateString('en-CA')) ? `${currentHour}:${currentMinute}` : "00:00"
+      }));
+
+      // Handle onchange event for 'toInput'
+      toInput._flatpickr.config.onChange.push(function(selectedDates, dateStr, instance) {
+          var toTime = instance.selectedDates[0];
+          var fromTime = fromInput._flatpickr.selectedDates[0];
+          if (toTime < fromTime) {
+              instance.setDate(fromTime);
+              alert("Beigu laiks nevar būt agrāks par sākuma laiku.");
+          }
+      });
+
+      // Handle onchange event for 'fromInput'
+      fromInput._flatpickr.config.onChange.push(function(selectedDates, dateStr, instance) {
+          var fromTime = instance.selectedDates[0];
+          var toTime = toInput._flatpickr.selectedDates[0];
+          if (fromTime > toTime) {
+              toInput._flatpickr.setDate(fromTime);
+              alert("Beigu laiks nevar būt agrāks par sākuma laiku.");
+          }
+      });
+  }
+
+    calendarEl.addEventListener('click', function(info) {
+    var targetDateElement = event.target.closest('.fc-daygrid-day');
+      if (targetDateElement && !event.target.closest('.fc-event')) {
+        // Get the clicked date
+        var clickedDate = targetDateElement.getAttribute('data-date');
+
+        if (clickedDate) {
+
+            showReservationForm(clickedDate);
+        }
+      }
+    });
+
+    function showEditReservationForm(reservationId, calendarGroupId, arg) {
+      // Obtain CSRF token from meta tag
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      fetch(`/calendar_groups/${calendarGroupId}/participant_reservations/${reservationId}/edit`, {
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken // Include CSRF token in the request headers
+          }
+      })
+      .then(response => response.text())
+      .then(data => {
+           var formHtml = new DOMParser().parseFromString(data, 'text/html').querySelector('#edit-reservation').innerHTML;
+           document.getElementById('reservation-form-container').innerHTML = formHtml;
+           document.querySelector('.new-reservation-container').style.display = 'block';
+
+           document.getElementById('reservation_time_from').value = arg.event.extendedProps.start_time;
+           document.getElementById('reservation_time_to').value = arg.event.extendedProps.end_time;
+
+           initializeFlatpickr();
+           document.getElementById('reservation_date').value = arg.event.extendedProps.formatted_date;
+
+      })
+      .catch(error => console.error('Error fetching reservation form:', error));
+  }
+
+  function openReservationPopup(element, arg, reservationDetails) {
+        var isAdmin = <%= admin? %>; // Function to check if the current user is an admin
+        var current_user_id = <%= current_user.id %>
+        var isCreatedByCurrentUser = checkIfReservationIsCreatedByCurrentUser(arg, current_user_id); // Function to check if the reservation is created by the current user
+        if ( isAdmin || isCreatedByCurrentUser ) {
+          var reservationId = arg.event.extendedProps.reservation_id;
+          var calendarGroupId = arg.event.extendedProps.calendar_group_id;
+
+          showEditReservationForm(reservationId, calendarGroupId, arg);
+
+        } else {
+            var popupContainer = document.querySelector('.popup-container');
+            var reservationDetailsContainer = popupContainer.querySelector('.reservation-details');
+            reservationDetailsContainer.innerHTML = reservationDetails;
+            popupContainer.style.display = 'flex';
+        }
+      }
+  });
+
+
+    function checkIfReservationIsCreatedByCurrentUser(arg, currentUserID) {
+      var reservationCreatorID = arg.event.extendedProps.created_by_id;
+      return currentUserID == reservationCreatorID;
+    }
+
+    function closePopup(element) {
+      var popupContainer = element.parentElement.parentElement;
+      popupContainer.style.display = "none";
+    }
+
+    closeBtn.addEventListener('click', function() {
+      reservationForm.style.display = 'none';
+    });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Hide description boxes by default
+    document.getElementById('pony-description-box').style.display = 'none';
+    document.getElementById('horse-description-box').style.display = 'none';
+
+    // Function to handle pony select change event
+    document.getElementById('pony-select').addEventListener('change', function() {
+      var selectedPonyId = this.value;
+      if (selectedPonyId === "default") {
+        document.getElementById('pony-description-box').textContent = '';
+        document.getElementById('pony-description-box').style.display = 'none'; // Hide description box
+      } else {
+        var selectedPony = <%= @calendar_group.calendar_ponies.to_json.html_safe %>.find(function(pony) {
+          return pony.id == selectedPonyId;
+        });
+        if (selectedPony) {
+          document.getElementById('pony-description-box').textContent = selectedPony.description || 'Apskatīt'; // Show description or default value
+          document.getElementById('pony-description-box').style.display = 'block'; // Display description box
+        } else {
+          document.getElementById('pony-description-box').textContent = '';
+          document.getElementById('pony-description-box').style.display = 'none'; // Hide description box
+        }
+      }
+    });
+
+    // Function to handle horse select change event
+    document.getElementById('horse-select').addEventListener('change', function() {
+      var selectedHorseId = this.value;
+      if (selectedHorseId === "default") {
+        document.getElementById('horse-description-box').textContent = '';
+        document.getElementById('horse-description-box').style.display = 'none'; // Hide description box
+      } else {
+        var selectedHorse = <%= @calendar_group.calendar_horses.to_json.html_safe %>.find(function(horse) {
+          return horse.id == selectedHorseId;
+        });
+        if (selectedHorse) {
+          document.getElementById('horse-description-box').textContent = selectedHorse.description || 'Apskatīt'; // Show description or default value
+          document.getElementById('horse-description-box').style.display = 'block'; // Display description box
+        } else {
+          document.getElementById('horse-description-box').textContent = '';
+          document.getElementById('horse-description-box').style.display = 'none'; // Hide description box
+        }
+      }
+    });
+
+    // Function to handle clicking away from the select boxes
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('#pony-select') && !event.target.closest('#horse-select')) {
+        document.getElementById('pony-description-box').textContent = '';
+        document.getElementById('pony-description-box').style.display = 'none'; // Hide description box
+        document.getElementById('horse-description-box').textContent = '';
+        document.getElementById('horse-description-box').style.display = 'none'; // Hide description box
+      }
+    });
+  });
+</script>

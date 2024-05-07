@@ -1,0 +1,56 @@
+<div class="flex inline-block mt-4 justify-between">
+  <div class="user-container flex">
+    <div class="w-40 h-40 rounded-full overflow-hidden mr-4">
+      <img src="<%= current_user.avatar %>" alt="User Avatar" class="w-full h-full object-cover">
+    </div>
+    <div id="profile-info">
+      <% if @user.errors.any? %>
+        <div class="error flex justify-center mr-7">
+          <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 mt-5 mb-5 py-3 rounded relative">
+            <ul>
+              <% @user.errors.each do |error| %>
+                <li><%= error.message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <%end%>
+      <div>
+        <div class="font-bold text-gray-600 inline-block">Vārds:</div>
+        <div class="inline-block text-gray-600"><%= current_user.name %></div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-600 inline-block">Uzvārds:</div>
+        <div class="text-gray-600 inline-block"><%= current_user.surname %></div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-600 inline-block">Lietotājvārds:</div>
+        <div class="text-gray-600 inline-block"><%= current_user.username %></div>
+      </div>
+      <div>
+        <div class="font-bold text-gray-600 inline-block">E-pasts:</div>
+        <div class="text-gray-600 inline-block"><%= current_user.email %></div>
+      </div>
+      <div id="edit-button" class="mt-3 flex items-center ">
+        <button onclick="togglePasswordUpdate()" class="bg-gray-500 text-white font-bold py-2 px-6 rounded inline-block hover:bg-blue-900 hover:text-white mr-5">Mainīt&nbsp;paroli</button>
+        <button onclick="toggleProfileUpdate()" class="bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white mr-2">Rediģēt</button>
+        
+      </div><div class="delete-button text-center mt-4">
+          <%= link_to "Dzēst profilu", user_path(@user), method: :delete, data: { confirm: "Vai esat pārliecināts, ka vēlaties dzēst profilu?" }, class: "bg-red-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2" %>
+      </div>
+    </div>
+  </div>
+  <div id="password-update" style="display:none;">
+    <%= render 'update_password', user: @user %>
+  </div>
+  <div id="profile-update" style="display:none;">
+    <%= render 'update', user: @user %>
+  </div>
+  <div class="pending-requests-container w-1/2">
+    <%= render 'pending_requests' %>
+  </div>
+  <div class="saved-positions-container w-full">
+    <%= render 'saved_positions'%>
+  </div>
+</div>
+<%= javascript_include_tag 'profile' %>

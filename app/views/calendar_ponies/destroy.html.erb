@@ -1,0 +1,4 @@
+<h1>Confirm Deletion</h1>
+<p>Are you sure you want to delete <%= @calendar_pony.pony_name %>?</p>
+<%= link_to 'Delete', calendar_group_calendar_pony_path(@calendar_group, @calendar_pony), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Cancel', calendar_group_calendar_pony_path(@calendar_group, @calendar_pony) %>

@@ -1,0 +1,45 @@
+<% if @pony_exercises.present? %>
+  <div class="p-4 flex items-center justify-between">
+    <%= link_to exercises_path, class: "bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white" do %>
+      <%= image_tag("arrow.svg", alt: "Arrow button", class: "w-6 h-6") %>
+    <% end %>
+    <h1 class="text-black text-xl items-center text-center font-bold mt-4 mb-3 mr-7">Zirgu vingrinājumi</h1>
+    <div></div>
+  </div>
+  <%= render 'course_positions/pony_exercises', pony_exercises: @pony_exercises %>
+<% elsif @pony_courses.present? %>
+  <div class="p-4 flex items-center justify-between">
+    <%= link_to exercises_path, class: "bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white" do %>
+      <%= image_tag("arrow.svg", alt: "Arrow button", class: "w-6 h-6") %>
+    <% end %>
+    <div class="text-center">
+      <h1 class="text-black text-xl items-center text-center font-bold mt-4 mb-3">Poniju maršuti</h1>
+    </div>
+    <div></div>
+  </div>
+  <%= render 'course_positions/pony_courses', pony_courses: @pony_courses %>
+<% elsif @horse_courses.present? %>
+  <div class="p-4 flex items-center justify-between">
+    <%= link_to exercises_path, class: "bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white" do %>
+      <%= image_tag("arrow.svg", alt: "Arrow button", class: "w-6 h-6") %>
+    <% end %>
+    <div class="text-center">
+      <h1 class="text-black text-xl items-center text-center font-bold mt-4 mb-3">Zirgu maršut</h1>
+    </div>
+    <div></div>
+  </div>
+  <%= render 'course_positions/horse_courses', horse_courses: @horse_courses %>
+<% elsif @horse_exercises.present? %>
+  <div class="p-4 flex items-center justify-between">
+    <%= link_to exercises_path, class: "bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white" do %>
+      <%= image_tag("arrow.svg", alt: "Arrow button", class: "w-6 h-6") %>
+    <% end %>
+    <div class="text-center">
+      <h1 class="text-black text-xl items-center text-center font-bold mt-4 mb-3">Zirgu vingrinājumi</h1>
+    </div>
+    <div></div>
+  </div>
+  <%= render 'course_positions/horse_exercises', horse_exercises: @horse_exercises %>
+<% else %>
+  <p>Nav pieejami dati.</p>
+<% end %>

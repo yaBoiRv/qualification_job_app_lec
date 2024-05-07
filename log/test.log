@@ -1,0 +1,280 @@
+  [1m[36mActiveRecord::InternalMetadata Load (1.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (40.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS "app_lec_test"[0m
+  [1m[35m (207.6ms)[0m  [1m[35mCREATE DATABASE "app_lec_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "active_storage_attachments" CASCADE[0m
+  [1m[35m (15.3ms)[0m  [1m[35mCREATE TABLE "active_storage_attachments" ("id" bigserial primary key, "name" character varying NOT NULL, "record_type" character varying NOT NULL, "record_id" bigint NOT NULL, "blob_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE INDEX "index_active_storage_attachments_on_blob_id" ON "active_storage_attachments" ("blob_id")[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_attachments_uniqueness" ON "active_storage_attachments" ("record_type", "record_id", "name", "blob_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "active_storage_blobs" CASCADE[0m
+  [1m[35m (9.1ms)[0m  [1m[35mCREATE TABLE "active_storage_blobs" ("id" bigserial primary key, "key" character varying NOT NULL, "filename" character varying NOT NULL, "content_type" character varying, "metadata" text, "service_name" character varying NOT NULL, "byte_size" bigint NOT NULL, "checksum" character varying, "created_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_blobs_on_key" ON "active_storage_blobs" ("key")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "active_storage_variant_records" CASCADE[0m
+  [1m[35m (8.7ms)[0m  [1m[35mCREATE TABLE "active_storage_variant_records" ("id" bigserial primary key, "blob_id" bigint NOT NULL, "variation_digest" character varying NOT NULL)[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "calendar_groups" CASCADE[0m
+  [1m[35m (9.3ms)[0m  [1m[35mCREATE TABLE "calendar_groups" ("id" bigserial primary key, "admin_id" bigint NOT NULL, "calendar_horse_id" bigint, "calendar_pony_id" bigint, "group_name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "parallel_reservation" boolean DEFAULT FALSE)[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE INDEX "index_calendar_groups_on_admin_id" ON "calendar_groups" ("admin_id")[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE INDEX "index_calendar_groups_on_calendar_horse_id" ON "calendar_groups" ("calendar_horse_id")[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE INDEX "index_calendar_groups_on_calendar_pony_id" ON "calendar_groups" ("calendar_pony_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "calendar_horses" CASCADE[0m
+  [1m[35m (8.7ms)[0m  [1m[35mCREATE TABLE "calendar_horses" ("id" bigserial primary key, "horse_name" character varying, "description" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "calendar_group_id" bigint NOT NULL)[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE INDEX "index_calendar_horses_on_calendar_group_id" ON "calendar_horses" ("calendar_group_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "calendar_horses_participant_reservations" CASCADE[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "calendar_horses_participant_reservations" ("participant_reservation_id" bigint NOT NULL, "calendar_horse_id" bigint NOT NULL)[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE INDEX "idx_on_calendar_horse_id_participant_reservation_id_a1985287be" ON "calendar_horses_participant_reservations" ("calendar_horse_id", "participant_reservation_id")[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE INDEX "idx_on_participant_reservation_id_calendar_horse_id_00bf37d185" ON "calendar_horses_participant_reservations" ("participant_reservation_id", "calendar_horse_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "calendar_participant_join_tables" CASCADE[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "calendar_participant_join_tables" ("id" bigserial primary key, "calendar_group_id" bigint, "user_id" bigint)[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE INDEX "index_calendar_participant_join_tables_on_calendar_group_id" ON "calendar_participant_join_tables" ("calendar_group_id")[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE INDEX "index_calendar_participant_join_tables_on_user_id" ON "calendar_participant_join_tables" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "calendar_participants" CASCADE[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "calendar_participants" ("id" bigserial primary key, "calendar_participant_join_table_id" bigint, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "participant_reservation_id" bigint)[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE INDEX "idx_on_calendar_participant_join_table_id_f6ee481875" ON "calendar_participants" ("calendar_participant_join_table_id")[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE INDEX "index_calendar_participants_on_participant_reservation_id" ON "calendar_participants" ("participant_reservation_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "calendar_ponies" CASCADE[0m
+  [1m[35m (9.0ms)[0m  [1m[35mCREATE TABLE "calendar_ponies" ("id" bigserial primary key, "pony_name" character varying, "description" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "calendar_group_id" bigint NOT NULL)[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE INDEX "index_calendar_ponies_on_calendar_group_id" ON "calendar_ponies" ("calendar_group_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "calendar_ponies_participant_reservations" CASCADE[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "calendar_ponies_participant_reservations" ("participant_reservation_id" bigint NOT NULL, "calendar_pony_id" bigint NOT NULL)[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "idx_on_calendar_pony_id_participant_reservation_id_96526e65f9" ON "calendar_ponies_participant_reservations" ("calendar_pony_id", "participant_reservation_id")[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE INDEX "idx_on_participant_reservation_id_calendar_pony_id_a445630158" ON "calendar_ponies_participant_reservations" ("participant_reservation_id", "calendar_pony_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "events" CASCADE[0m
+  [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE "events" ("id" bigserial primary key, "title" character varying, "description" text, "date" date, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "exercises" CASCADE[0m
+  [1m[35m (19.1ms)[0m  [1m[35mCREATE TABLE "exercises" ("id" bigserial primary key, "user_id" bigint NOT NULL, "exercise_name" character varying, "exercise_description" text, "animal_type" character varying, "exercise_type" character varying, "public" boolean, "completed" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "canvas_data" text, "canvas_image" bytea)[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE INDEX "index_exercises_on_user_id" ON "exercises" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "horse_courses" CASCADE[0m
+  [1m[35m (9.2ms)[0m  [1m[35mCREATE TABLE "horse_courses" ("id" bigserial primary key, "title" character varying, "description" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "exercise_id" bigint, "canvas_image" bytea)[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_horse_courses_on_exercise_id" ON "horse_courses" ("exercise_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "horse_courses_users" CASCADE[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "horse_courses_users" ("id" bigserial primary key, "user_id" bigint NOT NULL, "horse_course_id" bigint NOT NULL, "used" boolean DEFAULT FALSE, "saved" boolean DEFAULT FALSE, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE INDEX "index_horse_courses_users_on_horse_course_id" ON "horse_courses_users" ("horse_course_id")[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE INDEX "index_horse_courses_users_on_user_id" ON "horse_courses_users" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "horse_exercises" CASCADE[0m
+  [1m[35m (8.4ms)[0m  [1m[35mCREATE TABLE "horse_exercises" ("id" bigserial primary key, "title" character varying, "description" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "exercise_id" bigint, "canvas_image" bytea)[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE INDEX "index_horse_exercises_on_exercise_id" ON "horse_exercises" ("exercise_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "horse_exercises_users" CASCADE[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "horse_exercises_users" ("id" bigserial primary key, "user_id" bigint NOT NULL, "horse_exercise_id" bigint NOT NULL, "used" boolean DEFAULT FALSE, "saved" boolean DEFAULT FALSE, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE INDEX "index_horse_exercises_users_on_horse_exercise_id" ON "horse_exercises_users" ("horse_exercise_id")[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_horse_exercises_users_on_user_id" ON "horse_exercises_users" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "participant_reservations" CASCADE[0m
+  [1m[35m (7.9ms)[0m  [1m[35mCREATE TABLE "participant_reservations" ("id" bigserial primary key, "calendar_pony_id" bigint, "calendar_horse_id" bigint, "date" date, "time_from" time, "time_to" time, "comments" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "calendar_group_id" bigint NOT NULL, "calendar_participant_join_table_id" bigint NOT NULL, "created_by_id" bigint)[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE INDEX "index_participant_reservations_on_calendar_group_id" ON "participant_reservations" ("calendar_group_id")[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_participant_reservations_on_calendar_horse_id" ON "participant_reservations" ("calendar_horse_id")[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "idx_on_calendar_participant_join_table_id_2efaace85b" ON "participant_reservations" ("calendar_participant_join_table_id")[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE INDEX "index_participant_reservations_on_calendar_pony_id" ON "participant_reservations" ("calendar_pony_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "pending_associations" CASCADE[0m
+  [1m[35m (10.8ms)[0m  [1m[35mCREATE TABLE "pending_associations" ("id" bigserial primary key, "user_id" bigint, "calendar_group_id" bigint, "status" character varying DEFAULT 'pending', "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE INDEX "index_pending_associations_on_calendar_group_id" ON "pending_associations" ("calendar_group_id")[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE INDEX "index_pending_associations_on_user_id" ON "pending_associations" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "pony_courses" CASCADE[0m
+  [1m[35m (8.8ms)[0m  [1m[35mCREATE TABLE "pony_courses" ("id" bigserial primary key, "title" character varying, "description" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "exercise_id" bigint, "canvas_image" bytea)[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE INDEX "index_pony_courses_on_exercise_id" ON "pony_courses" ("exercise_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "pony_courses_users" CASCADE[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "pony_courses_users" ("id" bigserial primary key, "user_id" bigint NOT NULL, "pony_course_id" bigint NOT NULL, "used" boolean DEFAULT FALSE, "saved" boolean DEFAULT FALSE, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE INDEX "index_pony_courses_users_on_pony_course_id" ON "pony_courses_users" ("pony_course_id")[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE INDEX "index_pony_courses_users_on_user_id" ON "pony_courses_users" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "pony_exercises" CASCADE[0m
+  [1m[35m (9.4ms)[0m  [1m[35mCREATE TABLE "pony_exercises" ("id" bigserial primary key, "title" character varying, "description" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "exercise_id" bigint, "canvas_image" bytea)[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE INDEX "index_pony_exercises_on_exercise_id" ON "pony_exercises" ("exercise_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "pony_exercises_users" CASCADE[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "pony_exercises_users" ("id" bigserial primary key, "user_id" bigint NOT NULL, "pony_exercise_id" bigint NOT NULL, "used" boolean DEFAULT FALSE, "saved" boolean DEFAULT FALSE, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE INDEX "index_pony_exercises_users_on_pony_exercise_id" ON "pony_exercises_users" ("pony_exercise_id")[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE INDEX "index_pony_exercises_users_on_user_id" ON "pony_exercises_users" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (9.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying, "surname" character varying, "username" character varying, "email" character varying, "password_digest" character varying, "avatar" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (3.7ms)[0m  [1m[35mALTER TABLE "active_storage_attachments" ADD CONSTRAINT "fk_rails_c3b3935057"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mALTER TABLE "active_storage_variant_records" ADD CONSTRAINT "fk_rails_993965df05"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+[0m
+  [1m[35m (2.2ms)[0m  [1m[35mALTER TABLE "calendar_groups" ADD CONSTRAINT "fk_rails_320ec47cbc"
+FOREIGN KEY ("calendar_horse_id")
+  REFERENCES "calendar_horses" ("id")
+[0m
+  [1m[35m (2.4ms)[0m  [1m[35mALTER TABLE "calendar_groups" ADD CONSTRAINT "fk_rails_a254b9639b"
+FOREIGN KEY ("calendar_pony_id")
+  REFERENCES "calendar_ponies" ("id")
+[0m
+  [1m[35m (2.5ms)[0m  [1m[35mALTER TABLE "calendar_groups" ADD CONSTRAINT "fk_rails_30da93242a"
+FOREIGN KEY ("admin_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mALTER TABLE "calendar_horses" ADD CONSTRAINT "fk_rails_226ddea72b"
+FOREIGN KEY ("calendar_group_id")
+  REFERENCES "calendar_groups" ("id")
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mALTER TABLE "calendar_participant_join_tables" ADD CONSTRAINT "fk_rails_e137a3bbf8"
+FOREIGN KEY ("calendar_group_id")
+  REFERENCES "calendar_groups" ("id")
+[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "calendar_participant_join_tables" ADD CONSTRAINT "fk_rails_a395865664"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "calendar_participants" ADD CONSTRAINT "fk_rails_8acf617414"
+FOREIGN KEY ("calendar_participant_join_table_id")
+  REFERENCES "calendar_participant_join_tables" ("id")
+[0m
+  [1m[35m (1.8ms)[0m  [1m[35mALTER TABLE "calendar_ponies" ADD CONSTRAINT "fk_rails_bdb80905fd"
+FOREIGN KEY ("calendar_group_id")
+  REFERENCES "calendar_groups" ("id")
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mALTER TABLE "exercises" ADD CONSTRAINT "fk_rails_f4f6893528"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "horse_courses" ADD CONSTRAINT "fk_rails_1d5ecec10a"
+FOREIGN KEY ("exercise_id")
+  REFERENCES "exercises" ("id")
+[0m
+  [1m[35m (2.6ms)[0m  [1m[35mALTER TABLE "horse_courses_users" ADD CONSTRAINT "fk_rails_c6331e5910"
+FOREIGN KEY ("horse_course_id")
+  REFERENCES "horse_courses" ("id")
+[0m
+  [1m[35m (1.8ms)[0m  [1m[35mALTER TABLE "horse_courses_users" ADD CONSTRAINT "fk_rails_a770a4534a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "horse_exercises" ADD CONSTRAINT "fk_rails_edbd060423"
+FOREIGN KEY ("exercise_id")
+  REFERENCES "exercises" ("id")
+[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "horse_exercises_users" ADD CONSTRAINT "fk_rails_5c6ea0ef1b"
+FOREIGN KEY ("horse_exercise_id")
+  REFERENCES "horse_exercises" ("id")
+[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "horse_exercises_users" ADD CONSTRAINT "fk_rails_46f61384b9"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (1.8ms)[0m  [1m[35mALTER TABLE "participant_reservations" ADD CONSTRAINT "fk_rails_7777e50534"
+FOREIGN KEY ("calendar_group_id")
+  REFERENCES "calendar_groups" ("id")
+[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "participant_reservations" ADD CONSTRAINT "fk_rails_dd0d6a5230"
+FOREIGN KEY ("calendar_horse_id")
+  REFERENCES "calendar_horses" ("id")
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mALTER TABLE "participant_reservations" ADD CONSTRAINT "fk_rails_15d7db9ee2"
+FOREIGN KEY ("calendar_participant_join_table_id")
+  REFERENCES "calendar_participant_join_tables" ("id")
+ ON DELETE CASCADE[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "participant_reservations" ADD CONSTRAINT "fk_rails_2b279f61b3"
+FOREIGN KEY ("calendar_pony_id")
+  REFERENCES "calendar_ponies" ("id")
+[0m
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE "pending_associations" ADD CONSTRAINT "fk_rails_b41bab83d8"
+FOREIGN KEY ("calendar_group_id")
+  REFERENCES "calendar_groups" ("id")
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mALTER TABLE "pending_associations" ADD CONSTRAINT "fk_rails_c30d5d3d8a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (2.1ms)[0m  [1m[35mALTER TABLE "pony_courses" ADD CONSTRAINT "fk_rails_c2ba71e0b9"
+FOREIGN KEY ("exercise_id")
+  REFERENCES "exercises" ("id")
+[0m
+  [1m[35m (2.2ms)[0m  [1m[35mALTER TABLE "pony_courses_users" ADD CONSTRAINT "fk_rails_9c074c9c56"
+FOREIGN KEY ("pony_course_id")
+  REFERENCES "pony_courses" ("id")
+[0m
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE "pony_courses_users" ADD CONSTRAINT "fk_rails_54df8b6409"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (2.4ms)[0m  [1m[35mALTER TABLE "pony_exercises" ADD CONSTRAINT "fk_rails_34a55ecfe6"
+FOREIGN KEY ("exercise_id")
+  REFERENCES "exercises" ("id")
+[0m
+  [1m[35m (2.1ms)[0m  [1m[35mALTER TABLE "pony_exercises_users" ADD CONSTRAINT "fk_rails_4945daeb4c"
+FOREIGN KEY ("pony_exercise_id")
+  REFERENCES "pony_exercises" ("id")
+[0m
+  [1m[35m (2.1ms)[0m  [1m[35mALTER TABLE "pony_exercises_users" ADD CONSTRAINT "fk_rails_2143b9d6af"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (9.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20240416194732)[0m
+  [1m[35m (1.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20240410161134),
+(20240404104119),
+(20240323211749),
+(20240323211732),
+(20240323211725),
+(20240323211713),
+(20240323204810),
+(20240322182950),
+(20240322170454),
+(20240310094116),
+(20240310094017),
+(20240308203603),
+(20240308203557),
+(20240308192305),
+(20240304203351),
+(20240222194304),
+(20240221205001),
+(20240221204957),
+(20240221204954),
+(20240221204950),
+(20240209225602),
+(20240209225548),
+(20240209225428),
+(20240209225419),
+(20240206144957),
+(20240206144927),
+(20240206144753),
+(20240206144737),
+(20240206082246),
+(20240204202556),
+(20240204202243),
+(20240201212812),
+(20240131131246),
+(20240131131229),
+(20240131131152),
+(20240131121953),
+(20240131121742),
+(20240131120554),
+(20240102215825);[0m
+  [1m[35m (8.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2024-04-18 11:30:42.705113', '2024-04-18 11:30:42.705116') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '07837ba816dff96448f6f83fa561e1c1b723f83d', '2024-04-18 11:30:42.708057', '2024-04-18 11:30:42.708058') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m

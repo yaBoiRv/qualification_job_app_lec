@@ -1,0 +1,29 @@
+<p>
+  <strong class="text-black">Novietojuma nosaukums:</strong>
+  <%= @exercise.exercise_name %>
+</p>
+<p>
+  <strong class="text-black">Novietojuma apraksts:</strong>
+  <%= @exercise.exercise_description %>
+</p>
+<p>
+  <strong class="text-black">Novietojuma dzīvnieks:</strong>
+  <%= @exercise.animal_type %>
+</p>
+<p>
+  <strong class="text-black">Novietojuma tips:</strong>
+  <%if @exercise.exercise_type == "marsuts"%>
+    <a>Maršuts</a>
+  <%else%>
+    <a>Vingrinājums</a>
+  <%end%>
+</p>
+<p>
+  <strong class="text-black">Publisks novietojums:</strong>
+  <%= @exercise.public ? 'Jā' : 'Nē' %>
+</p>
+<p>
+  <strong class="text-black">Pabeigts novietojums:</strong>
+  <%= @exercise.completed ? 'Jā' : 'Nē' %>
+</p>
+<%= link_to 'Rediģēt', edit_exercise_path(@exercise), class: "text-orange-500 hover:text-orange-700" %> |

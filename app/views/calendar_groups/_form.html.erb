@@ -1,0 +1,396 @@
+<div class="p-3">
+  <%= stylesheet_link_tag "calendar_group" %>
+  <%= javascript_include_tag "show_reservation" %>
+  <%= form_with(model: calendar_group, local: true) do |form| %>
+    <% if @calendar_group.errors.any? %>
+      <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 mt-5 mb-5 py-3 rounded relative">
+        <ul>
+          <% @calendar_group.errors.each do |error| %>
+            <li><%= error.message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <%end%>
+    <p class="text-center underline">*Poniji un zirgi bez ievadītiem vārdiem netiks saglabāti!</p>
+    <div class="flex flex-wrap">
+      <div class="w-full md:w-1/3 mb-4 mt-1">
+        <div class="mb-4">
+          <%= form.label :group_name, "Grupas nosaukums", class: "block text-gray-700 text-lg font-bold mb-2" %>
+          <%= form.text_field :group_name, class: "shadow appearance-none border rounded w-1/2 py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+        </div>
+        <p class="block text-gray-700 text-lg font-bold mb-2">Pievienot lietotājus kalendāram</p>
+        <div class="user-search  flex-col items-center">
+          <div class="flex-col items-start">
+            <input type="text" id="searchInput" placeholder="Ievadiet lietotājvārdu vai frāzi..." class="mb-2">
+            <button class="bg-green-500 text-white rounded-full py-2 px-4 mt-3" type="button" id="searchButton">Meklēt</button>
+          </div>
+          <div id="results">
+          </div>
+        </div>
+        <%= form.hidden_field :user_ids, id: "selectedUserIds", multiple: true %>
+        <p class="font-bold">Pievienotie lietotāji:</p>
+        <div id="selectedUsers">
+        </div>
+        <% if @calendar_group.persisted? %>
+          <% @calendar_group.users.each do |user| %>
+            <div id="user-<%= user.id %>">
+              <%if user.id == current_user.id%>
+                &bull; Jūs
+              <%else%>
+                <div class="flex items-center">
+                  &bull; <%= user.username %>
+                  <%= link_to(url_for(controller: 'calendar_groups', action: 'remove_user', calendar_group_id: calendar_group.id, user_id: user.id), method: :delete, remote: true, class: 'remove_link p-1 ml-1', data: { confirm: 'Are you sure?', user_id: user.id }) do %>
+                    <%= image_tag("minus.svg", alt: "Minus button", class: "h-5 w-5 bg-green-500 rounded-full p-1") %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <%end%>
+        <div class="info-checkbox-wrapper flex items-center mb-5 mt-5">
+          <div class="info-container relative mr-3">
+            <div class="info-wrapper">
+              <button class="info-button text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900" aria-label="Info">ℹ️</button>
+              <div class="info-text absolute left-5 mb-9 bg-white border border-gray-200 rounded-lg shadow-md p-4 overflow-hidden hidden">
+                <div class="info-text-content overflow-auto">
+                  Kalendāra dalībnieki varēs veikt rezervāciju pārklājoties laikiem ar izvēlēto zirgu vai poniju, tikai tad ja izvēlētais zirgs vai ponijs jau nav laika periodā izvēlēts.
+                  Ja lauks nav atzīmēts, tad rezervācijas nepārklāsies nekādā gadījumā.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <%= form.label :parallel_reservation, "Paralēlā rezervācija",class: "inline-block mr-2 font-bold" %>
+            <%= form.check_box :parallel_reservation %>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <%= form.submit "Apstiprināt", class: "font-bold bg-indigo-600 cursor-pointer text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mr-4"  %>
+          <% if @calendar_group.id.present? %>
+            <%= link_to 'Dzēst', calendar_group_path(@calendar_group), method: :delete, class: "inline-block px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 hover:text-white", id: "delete-button" %>
+          <% end %>
+        </div>
+      </div>
+      <div class="w-full md:w-1/3 mb-4">
+        <div id="horses" class="mb-4">
+          <%= form.fields_for :calendar_horses do |horse_form| %>
+            <div class="horse-fields mb-4">
+              <%= horse_form.label :horse_name, "Zirga vārds", class: "block text-gray-700 text-lg font-bold mb-2" %>
+              <%= horse_form.text_field :horse_name, class: "shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+              <%= horse_form.label :description, "Apraksts", class: "block text-gray-700 text-lg font-bold mb-2" %>
+              <%= horse_form.text_area :description, class: "shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+              <%= horse_form.hidden_field :_destroy, class: 'destroy-field' %>
+              <%= link_to 'Noņemt', '#', class: 'remove-horse text-red-500', data: { action: "nested-fields#removeItem" } %>
+            </div>
+          <% end %>
+          <%= link_to 'Pievienot zirgu', '#', class: 'add-horse bg-green-500 text-white rounded-full py-2 px-4 inline-block mb-4', data: { action: "nested-fields#addItem", target: "nested-fields.item" } %>
+        </div>
+      </div>
+      <div class="w-full md:w-1/3 mb-4">
+        <div id="ponies" class="mb-4 ml-3">
+          <%= form.fields_for :calendar_ponies do |pony_form| %>
+            <div class="pony-fields mb-4">
+              <%= pony_form.label :pony_name, "Ponija vārds", class: "block text-gray-700 text-lg font-bold mb-2" %>
+              <%= pony_form.text_field :pony_name, class: "shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+              <%= pony_form.label :description, "Apraksts", class: "block text-gray-700 text-lg font-bold mb-2" %>
+              <%= pony_form.text_area :description, class: "shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+              <%= pony_form.hidden_field :_destroy, class: 'destroy-field' %>
+              <%= link_to 'Noņemt', '#', class: 'remove-pony text-red-500', data: { action: "nested-fields#removeItem" } %>
+            </div>
+          <% end %>
+          <%= link_to 'Pievienot poniju', '#', class: 'add-pony bg-green-500 text-white rounded-full py-2 px-4 inline-block mb-4', data: { action: "nested-fields#addItem", target: "nested-fields.item" } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const searchButton = document.getElementById('searchButton');
+      const searchInput = document.getElementById('searchInput');
+      const resultsContainer = document.getElementById('results');
+      const selectedUsersContainer = document.getElementById('selectedUsers');
+      const selectedUserIdsInput = document.getElementById('selectedUserIds');
+      let currentPage = 1;
+
+      // Initialize selectedUserIds with existing user IDs
+      let selectedUserIds = <%= @calendar_group.users.pluck(:id).to_json %>;
+      // Add event listeners for removing existing users
+      const removeExistingUserButtons = document.querySelectorAll('.remove-existing-user');
+      removeExistingUserButtons.forEach(button => {
+          button.addEventListener('click', function(event) {
+              event.preventDefault();
+              const userId = button.dataset.userId;
+              removeUser(userId);
+          });
+      });
+
+       searchButton.addEventListener('click', function() {
+          // Fetch users based on search query and display results
+          const searchQuery = searchInput.value.trim();
+          fetch(`/search?term=${encodeURIComponent(searchQuery)}&page=${currentPage}`)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              if (data.error) {
+                alert(data.error);
+              } else {
+                if (data.total_pages !== undefined) {
+                  totalPages = data.total_pages;
+                }
+                displaySearchResults(data.users);
+                currentPage = 1;
+              }
+            })
+            .catch(error => console.error('Error:', error));
+  });
+
+  function displaySearchResults(users) {
+      // document.getElementById('selectedUserIds');
+      resultsContainer.innerHTML = ''; // Clear previous results
+      users.forEach(user => {
+          const userDiv = document.createElement('div');
+          userDiv.className = 'flex items-center'; // Make the userDiv a flex container with items centered
+          const bullet = document.createTextNode('\u2022');
+          userDiv.appendChild(bullet);
+          userDiv.appendChild(document.createTextNode(' '));
+          userDiv.appendChild(document.createTextNode(user.username));
+          const addButton = document.createElement('a');
+          addButton.href = '#';
+          addButton.onclick = function(event) {
+              event.preventDefault();
+              addUser(user.id, user.username);
+          };
+
+          // Create a div for the circular background
+          var circleDiv = document.createElement('div');
+          circleDiv.className = 'bg-green-500 rounded-full w-5 h-5 p-1 ml-2';
+
+          // Create a new image element
+          var img = document.createElement('img');
+          // Set the src, alt, and class attributes of the image
+          img.src = '<%= asset_path("plus.svg") %>';
+          img.alt = 'Plus button';
+          img.style.fill = 'white';
+          // Append the image element to the div with the circular background
+          circleDiv.appendChild(img);
+          // Append the div with the circular background to the anchor tag
+          addButton.appendChild(circleDiv);
+          // Append the anchor tag to the user div
+          userDiv.appendChild(addButton);
+          // Append the user div to the results container
+          resultsContainer.appendChild(userDiv);
+      });
+      addPaginator();
+  }
+  function addPaginator() {
+      const paginatorContainer = document.createElement('div');
+
+      // Clear previous paginator buttons
+      while (paginatorContainer.firstChild) {
+          paginatorContainer.removeChild(paginatorContainer.firstChild);
+      }
+
+      if (totalPages <= 1) {
+          return; // If there is only one page, don't show the paginator
+      }
+
+      for (let i = 1; i <= totalPages; i++) {
+          const pageButton = document.createElement('button');
+          pageButton.textContent = i;
+          pageButton.className = 'mx-1 px-1.5 py-0.5 rounded border text-sm';
+
+          // Apply different styles to the current page button
+          if (i === currentPage) {
+              pageButton.classList.add('bg-orange-800', 'text-white');
+          } else {
+              pageButton.classList.add('hover:bg-blue-500', 'hover:text-white');
+          }
+
+          // Closure to capture the value of i
+          (function(page) {
+              pageButton.addEventListener('click', function(event) {
+                  event.preventDefault(); // Prevent form submission
+                  currentPage = page;
+                  searchButton.click(); // Trigger search with new page
+              });
+          })(i);
+
+          paginatorContainer.appendChild(pageButton);
+      }
+
+      resultsContainer.appendChild(paginatorContainer);
+  }
+    function addUser(userId, userName) {
+        if (!selectedUserIds.includes(userId)) {
+            // Add user to selectedUserIds array
+            selectedUserIds.push(userId);
+
+            // Update hidden input value
+            selectedUserIdsInput.value = selectedUserIds.join(',');
+
+            // Display selected user in UI
+            const userDiv = document.createElement('div');
+            userDiv.id = `user-${userId}`;
+            userDiv.innerHTML = `&bull; ${userName} <button type="button" class="remove-button h-5 w-5 bg-green-500 rounded-full p-1 ml-1 "> <%= image_tag("minus.svg", alt: "Clear canvas button") %> </button>`;
+            selectedUsersContainer.appendChild(userDiv);
+
+            // Add event listener to the remove button
+            const removeButton = userDiv.querySelector('.remove-button');
+            removeButton.addEventListener('click', function() {
+                removeUser(userId);
+            });
+        }
+    }
+
+      function initializeExistingUsers() {
+        const removeExistingUserButtons = document.querySelectorAll('.remove-existing-user');
+        removeExistingUserButtons.forEach(button => {
+          button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const userId = button.dataset.userId;
+            removeUser(userId);
+          });
+        });
+    }
+      initializeExistingUsers();
+      function removeUser(userId) {
+        console.log("Removing user:", userId);
+
+        // Remove user from the UI
+        const userDiv = document.getElementById(`user-${userId}`);
+        if (userDiv) {
+          userDiv.remove();
+        }
+
+        // Update hidden input value
+        selectedUserIdsInput.value = selectedUserIds.filter(id => id !== userId).join(',');
+
+        // Remove user from the selectedUserIds array
+        selectedUserIds = selectedUserIds.filter(id => id !== userId);
+      }
+
+    const form = document.querySelector('form');
+
+    form.addEventListener('click', function(event) {
+      if (event.target.classList.contains('add-horse')) {
+        event.preventDefault();
+        addHorseField();
+      }
+
+      if (event.target.classList.contains('add-pony')) {
+        event.preventDefault();
+        addPonyField();
+      }
+
+      if (event.target.classList.contains('remove-horse')) {
+        event.preventDefault();
+        removeField(event.target.closest('.horse-fields'));
+      }
+
+      if (event.target.classList.contains('remove-pony')) {
+        event.preventDefault();
+        removeField(event.target.closest('.pony-fields'));
+      }
+      const destroyFields = document.querySelectorAll('.destroy-field');
+    // Log the values of _destroy fields
+      destroyFields.forEach(field => {
+    });
+    });
+
+  function addHorseField() {
+      const horseFields = document.getElementById('horses');
+      const horseCount = horseFields.querySelectorAll('.horse-fields').length;
+
+      const newHorseFields = document.createElement('div');
+      newHorseFields.classList.add('horse-fields');
+      newHorseFields.innerHTML = `
+        <div class="mb-4">
+          <label for="calendar_group_calendar_horses_attributes_${horseCount}_horse_name" class="block text-gray-700 text-lg font-bold mb-2">Zirga vārds</label>
+          <input type="text" name="calendar_group[calendar_horses_attributes][${horseCount}][horse_name]" id="calendar_group_calendar_horses_attributes_${horseCount}_horse_name" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg">
+        </div>
+        <div class="mb-4">
+          <label for="calendar_group_calendar_horses_attributes_${horseCount}_description" class="block text-gray-700 text-lg font-bold mb-2">Apraksts</label>
+          <textarea name="calendar_group[calendar_horses_attributes][${horseCount}][description]" id="calendar_group_calendar_horses_attributes_${horseCount}_description" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg"></textarea>
+        </div>
+        <a href="#" class="remove-horse text-red-500">Noņemt</a>
+      `;
+
+      horseFields.insertBefore(newHorseFields, document.querySelector('.add-horse'));
+  }
+
+    function addPonyField() {
+      const ponyFields = document.getElementById('ponies');
+      const ponyCount = ponyFields.querySelectorAll('.pony-fields').length;
+
+      const newPonyFields = document.createElement('div');
+      newPonyFields.classList.add('pony-fields');
+      newPonyFields.innerHTML = `
+        <div class="mb-4">
+          <label for="calendar_group_calendar_ponies_attributes_${ponyCount}_pony_name" class="block text-gray-700 text-lg font-bold mb-2">Ponijas vārds</label>
+          <input type="text" name="calendar_group[calendar_ponies_attributes][${ponyCount}][pony_name]" id="calendar_group_calendar_ponies_attributes_${ponyCount}_pony_name" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg">
+        </div>
+        <div class="mb-4">
+          <label for="calendar_group_calendar_ponies_attributes_${ponyCount}_description" class="block text-gray-700 text-lg font-bold mb-2">Apraksts</label>
+          <textarea name="calendar_group[calendar_ponies_attributes][${ponyCount}][description]" id="calendar_group_calendar_ponies_attributes_${ponyCount}_description" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg"></textarea>
+        </div>
+        <a href="#" class="remove-pony text-red-500">Noņemt</a>
+      `;
+
+      ponyFields.insertBefore(newPonyFields, document.querySelector('.add-pony'));
+    }
+    function moveButton(containerId, buttonClass) {
+        const container = document.getElementById(containerId);
+        container.appendChild(document.querySelector(`.${buttonClass}`));
+    }
+
+    function removeField(field) {
+      // Find the destroy field within the field container
+      const destroyField = field.querySelector('.destroy-field');
+      // Check if destroyField is found and if it has a value
+      if (destroyField && destroyField.value !== 'true') {
+        // Set the value of _destroy field to true
+        destroyField.value = 'true';
+        // Hide the removed field
+        field.style.display = 'none';
+      } else {
+        // If destroyField is not found or it's already marked for destruction, remove the field entirely
+        field.remove();
+      }
+
+    }
+   const removeLinks = document.querySelectorAll('.remove_link');
+      removeLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+          event.preventDefault(); // Prevent the default click behavior
+
+          const userId = this.dataset.userId;
+          const userDiv = document.getElementById('user-' + userId);
+            fetch(this.href, {
+              method: 'DELETE',
+              headers: {
+                'X-CSRF-Token': '<%= form_authenticity_token %>',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              }
+            })
+            .then(response => {
+              // Handle response as needed
+              console.log(response);
+              // Remove the user div from the DOM if the request was successful
+              if (response.ok) {
+                userDiv.remove();
+              }
+            })
+            .catch(error => {
+              // Handle error as needed
+              console.error('Error:', error);
+            });
+        });
+      });
+  });
+</script>

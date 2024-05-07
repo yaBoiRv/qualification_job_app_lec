@@ -1,0 +1,81 @@
+#step-indicators {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+#button-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px; /* Adjust top margin as needed */
+  justify-content: center;
+}
+
+.step-indicator {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  margin: 0 5px; 
+}
+
+
+.current-step {
+  background-color: rgb(133, 134, 137); /* Change color to highlight the current step */
+  color: white; /* Change text color for better visibility */
+}
+
+.draggable-svg {
+  cursor: pointer;
+}
+
+#canvas {
+    cursor: grab;
+}
+
+#canvas:active {
+    cursor: grabbing;
+}
+
+/* CSS for small screens */
+
+#buttons-container {
+  order: 1; /* Buttons container comes first in the HTML structure */
+  margin-right: 20px; /* Adjust spacing between buttons and canvas */
+}
+
+canvas {
+  max-width: calc(100% - 200px); /* Make the canvas responsive, adapting to the container width minus the width of the buttons container */
+  height: auto; /* Allow the canvas height to adjust proportionally to its width */
+}
+
+/* CSS for larger screens */
+@media (min-width: 768px) {
+  canvas {
+      max-width: calc(100% - 200px); /* Make the canvas responsive, adapting to the container width minus the width of the buttons container */
+      max-height: 100%; /* Make the canvas responsive, adapting to the container height */
+  }
+}
+
+/* Adjust form fields for responsiveness */
+.field {
+  margin-bottom: 20px; /* Add spacing between fields */
+  text-align: center; /* Center align text fields */
+}
+
+/* Make form fields responsive */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  width: 80%; /* Adjust width as desired */
+  max-width: 400px; /* Limit maximum width */
+  padding: 10px; /* Adjust padding */
+  font-size: 16px; /* Increase font size for better readability */
+  margin: 0 auto; /* Center align */
+}

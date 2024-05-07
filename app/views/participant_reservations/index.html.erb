@@ -1,0 +1,14 @@
+<h1>Reservations</h1>
+<%= calendar @participant_reservations, attribute: :date, month_names: Date::MONTHNAMES, day_names: Date::DAYNAMES do |date, participant_reservations| %>
+  <%= date.day %>
+  <% participant_reservations.each do |reservation| %>
+    <div>
+      <%= reservation.calendar_participant.name %> reserved <%= reservation.calendar_horse.horse_name %>
+      from <%= reservation.time_from %> to <%= reservation.time_to %>
+    </div>
+  <% end %>
+  <div class="reservation-form">
+    <%= render 'form', participant_reservation: ParticipantReservation.new(date: date) %>
+  </div>
+<% end %>
+<%= link_to 'New Reservation', new_calendar_group_reservation_path(@calendar_group) %>

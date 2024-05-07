@@ -1,0 +1,39 @@
+<h1>Reservations</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Time From</th>
+      <th>Time To</th>
+      <th>Horse</th>
+      <th>Pony</th>
+      <th>User</th>
+      <!-- Add more columns as needed -->
+    </tr>
+  </thead>
+  <% if @reservations.nil? %>
+    <p>No reservations found.</p>
+  <% else %>
+    <tbody>
+      <% @reservations.each do |reservation| %>
+        <tr>
+          <td><%= reservation.date %></td>
+          <td><%= reservation.time_from.strftime('%H:%M') %></td>
+          <td><%= reservation.time_to.strftime('%H:%M') %></td>
+          <td>
+            <% reservation.calendar_horses.each do |horse| %>
+              <%= horse.horse_name %><br>
+            <% end %>
+          </td>
+          <td>
+            <% reservation.calendar_ponies.each do |pony| %>
+              <%= pony.pony_name %><br>
+            <% end %>
+          </td>
+          <td><%= reservation.calendar_participant_join_table.user.name %></td>
+          <!-- Add more data as needed -->
+        </tr>
+      <% end %>
+    </tbody>
+  <%end%>
+</table>

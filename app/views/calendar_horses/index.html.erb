@@ -1,0 +1,12 @@
+<h1>Calendar Horses</h1>
+<% if @calendar_horses.present? %>
+  <% @calendar_horses.each do |horse| %>
+    <div>
+      <h2><%= link_to horse.name, calendar_group_calendar_horse_path(@calendar_group, horse) %></h2>
+      <p><%= horse.horse_name %></p>
+      <p><%= horse.description %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>No horses available.</p>
+<% end %>

@@ -1,0 +1,22 @@
+<div class="py-8 h-full">
+  <div class="container mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-4 text-black">Kontakti</h2>
+    <p class="text-black">Sazinieties ar mums:</p>
+    <ul class="text-black mt-4">
+      <li><strong>E-pasts:</strong> lecapp@inbox.lv</li>
+      <li><strong>Telefona numurs:</strong> +371 12345678</li>
+      <li><strong>Adrese:</strong> Ziedu iela 1, Rīga, Latvija</li>
+    </ul>
+    <p class="text-black mt-4">Vai arī aizpildiet šo formu, lai sazinātos ar mums:</p>
+    <form action="/support" method="post" class="mt-4" onsubmit="return validateForm()">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="text" id="support-name" name="name" placeholder="Jūsu vārds" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="<%= current_user.name if current_user %>">
+      <input type="email" id="support-email" name="email" placeholder="Jūsu e-pasta adrese" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="<%= current_user.email if current_user %>">
+      <textarea name="message" id="support-message" placeholder="Jūsu ziņa" rows="4" class="w-full mx-auto mt-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
+      <div>
+        <button type="submit" class="bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white">Nosūtīt</button>
+      </div>
+    </form>
+  </div>
+</div>
+<%= javascript_include_tag 'profile' %>

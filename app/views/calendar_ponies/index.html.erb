@@ -1,0 +1,11 @@
+<h1>All Ponies</h1>
+<% if @calendar_ponies.present? %>
+  <% @calendar_ponies.each do |pony| %>
+    <div>
+      <h2><%= link_to pony.pony_name, calendar_group_calendar_pony_path(@calendar_group, pony) %></h2>
+      <p><%= pony.description %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>There are no ponies associated with this calendar group.</p>
+<% end %>

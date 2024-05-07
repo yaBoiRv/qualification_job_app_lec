@@ -1,0 +1,15 @@
+<!-- _horse_fields.html.erb -->
+<div class="horse-fields">
+  <%= f.fields_for :calendar_horses, @horse do |horse_form| %>
+    <div class="mb-4">
+      <%= horse_form.label :horse_name, "Horse Name", class: "block text-gray-700 text-lg font-bold mb-2" %>
+      <%= horse_form.text_field :horse_name, class: "shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+    </div>
+    <div class="mb-4">
+      <%= horse_form.label :description, "Description", class: "block text-gray-700 text-lg font-bold mb-2" %>
+      <%= horse_form.text_area :description, class: "shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" %>
+    </div>
+    <!-- Button to remove horse field -->
+    <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded remove-horse">Remove Horse</button>
+  <% end %>
+</div>

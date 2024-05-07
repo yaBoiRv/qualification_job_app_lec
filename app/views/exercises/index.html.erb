@@ -1,0 +1,130 @@
+<%= javascript_include_tag 'show_exercises' %>
+<%= stylesheet_link_tag "show_exercises" %>
+<h1 class="text-black text-center text-xl mt-4 font-bold">Jūsu izveidotie novietojumi</h1>
+<div class="flex justify-end mr-5">
+  <%= link_to 'Izveidot novietojumu', new_exercise_path, class: "bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white" %>
+</div>
+<div class="flex justify-center mb-2">
+  <%= paginate @exercises %>
+</div>
+<% if @exercises.any? %>
+  <% @exercises.each do |exercise| %>
+    <div class="border-b border-gray-600 mb-4 pb-4 ml-5 shadow-md" x-data="{ open: false }">
+      <h3 class="text-lg font-bold cursor-pointer text-center" @click="open = !open">
+        <%= exercise.exercise_name %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block w-4 h-4 align-middle ml-1">
+          <path fill-rule="evenodd" d="M10 12a1 1 0 0 1-.707-.293l-4-4a1 1 0 0 1 1.414-1.414L10 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-.707.293z" clip-rule="evenodd" />
+        </svg>
+      </h3>
+      <div class="mt-2 ml-auto mr-5" x-show="open" @click.away="open = false" id="exercise_<%= exercise.id %>" style="display: flex; justify-content: center; align-items: center;">
+        <div class=" pb-4 mr-5 flex">
+          <div class="mb-4 mt-5 w-full description-container" id="description-container-<%= exercise.id %>">
+            <div class="flex flex-col items-center rounded-lg bg-gray-100 shadow-md">
+              <strong class="text-bold text-xl underline highlight-text" id="exercise_description">Par novietojumu:</strong>
+              <div id="exercise_description_content_<%= exercise.id %>" class="description-content">
+                <p class="mr-3 ml-3" id="exercise_description_text_<%= exercise.id %>"><%= exercise.exercise_description %></p>
+                <% if exercise.exercise_description.length > 50 %>
+                  <button class="show-more-btn" onclick="toggleDescription('exercise_description_text_<%= exercise.id %>')">Rādīt vairāk</button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <!-- Canvas Image -->
+          <div class="mt-2 w-full" id="canvas_container_<%= exercise.id %>">
+            <div class="image-container border border-black rounded-lg overflow-hidden cursor-pointer" onclick="openPopup(this)">
+              <div class="image-wrapper items-center justify-center">
+                <%= image_tag("mouse-click-icon.svg", alt: "Click button", class: "click w-6 h-6") %>
+                <img class="small-image h-40 max-w-full" src="<%= exercise.canvas_image %>" style="filter: blur(5px);" />
+              </div>
+            </div>
+          </div>
+          <!-- Info Box -->
+          <div class="mt-2 ml-auto mr-5 w-full" id="info-box-container-<%= exercise.id %>">
+            <div class="info-box info-box-container" onmouseover="showInfoBox(event, '<%= exercise.id %>')" onmouseleave="hideInfoBox('<%= exercise.id %>')">
+              <p>
+                <strong class="text-white bg-orange-700 highlight-text" id="animal_type">Novietojuma dzīvnieks:</strong>
+                <% if exercise.animal_type == "Zirgs" %>
+                  <span class="inline-block rounded bg-gray-300 mr-0 text-gray-600 py-1 px-2">Ponijs</span>
+                  <span class="inline-block rounded bg-green-500 ml-0 py-1 px-2">Zirgs</span>
+                <% else %>
+                  <span class="inline-block rounded bg-green-500 ml-0 py-1 px-2">Ponijs</span>
+                  <span class="inline-block rounded bg-gray-300 text-gray-600 ml-0 py-1 px-2">Zirgs</span>
+                <% end %>
+              </p>
+              <p>
+                <strong class="text-white bg-orange-700 highlight-text" id="exercise_type">Novietojuma tips:</strong>
+                <% if exercise.exercise_type == "marsuts" %>
+                  <span class="inline-block rounded bg-green-500 ml-0 py-1 px-2">Maršuts</span>
+                  <span class="inline-block rounded bg-gray-300 text-gray-600 py-1 px-2">Vingrinājums</span>
+                <% else %>
+                  <span class="inline-block rounded bg-gray-300 text-gray-600 py-1 px-2">Maršuts</span>
+                  <span class="inline-block rounded bg-green-500 ml-0 py-1 px-2">Vingrinājums</span>
+                <% end %>
+              </p>
+              <p>
+                <strong class="text-white bg-orange-700 highlight-text" id="public">Publisks novietojums:</strong>
+                <% if exercise.public %>
+                  <span class="inline-block rounded bg-green-500 ml-0 py-1 px-2">Jā</span>
+                  <span class="inline-block rounded bg-gray-300 text-gray-600 py-1 px-2">Nē</span>
+                <% else %>
+                  <span class="inline-block rounded bg-gray-300 text-gray-600 py-1 px-2">Jā</span>
+                  <span class="inline-block rounded bg-green-500 ml-0 py-1 px-2">Nē</span>
+                <% end %>
+              </p>
+              <p>
+                <strong class="text-white bg-orange-700 highlight-text" id="completed">Pabeigts novietojums:</strong>
+                <% if exercise.completed %>
+                  <span class="inline-block rounded bg-green-500 ml-0 py-1 px-2">Jā</span>
+                  <span class="inline-block rounded bg-gray-300 text-gray-600 py-1 px-2">Nē</span>
+                <% else %>
+                  <span class="inline-block rounded bg-gray-300 text-gray-600 py-1 px-2">Jā</span>
+                  <span class="inline-block rounded bg-green-500 ml-0 py-1 px-2">Nē</span>
+                <% end %>
+              </p>
+            </div>
+            <div class="info-box-content hidden" id="info-box-content-<%= exercise.id %>">
+              <!-- Content for the information box -->
+              Šim ir tikai informatīva nozīme, lai veiktu izmaiņas nospiežat pogu rediģēt!
+            </div>
+          </div>
+          <div class="popup-container" style="display: none;">
+            <div class="popup-content relative" data-exercise-name="<%= exercise.exercise_name %>">
+              <button class="close-btn bg-gray-500 hover:bg-gray-700 text-white px-2 py-1 rounded-full absolute top-0 right-0 m-2" onclick="closePopup(this)">
+                <%= image_tag("close-x.svg", alt: "Close button", class: "w-6 h-6") %>
+              </button>
+              <img class="full-image" src="" alt="Full Image">
+              <div class="popup-options flex">
+                <button class="print-btn bg-gray-500 hover:bg-gray-700 text-white px-3 py-2 rounded mr-2" onclick="printImage(this)">
+                  <%= image_tag("print.svg", alt: "Print button", class: "w-6 h-6") %>
+                </button>
+                <button class="download-btn bg-green-500 hover:bg-green-700 text-white px-3 py-2 rounded" onclick="downloadImage(this)">
+                  <%= image_tag("downloads.png", alt: "Rotate left button", class: "w-6 h-6") %>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Edit Link -->
+        <div class="mt-2" style="display: flex; justify-content: center;">
+          <%= link_to 'Rediģēt', edit_exercise_path(exercise), class: "bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-900 hover:text-white" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-black text-center">Nav izveidotu novietojumu</p>
+<% end %>
+<div class="flex justify-center mt-2 mb-2">
+  <%= paginate @exercises %>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const selectedExerciseId = <%= params[:selected_exercise_id].to_i %>;
+    if (selectedExerciseId) {
+      const selectedExercise = document.getElementById(`exercise_${selectedExerciseId}`);
+      if (selectedExercise) {
+        selectedExercise.querySelector("[x-data]").__x.$data.open = true;
+      }
+    }
+  });
+</script>
