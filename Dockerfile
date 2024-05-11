@@ -5,7 +5,7 @@ ARG RUBY_VERSION=3.2.2
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
 # Rails app lives here
-WORKDIR /rails
+WORKDIR /app
 
 # Set production environment
 ENV RAILS_ENV="production" \
@@ -17,10 +17,29 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
+# Install system dependencies, Node.js, npm, and Yarn
+RUN apt-get update -qq && apt-get install -y build-essential git curl libpq-dev libvips postgresql-client && \
+    curl -sS https://deb.nodesource.com/setup_18.x | bash && \
+    apt-get install -y nodejs && \
+    npm install -g npm@latest && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update -qq && apt-get install -y yarn && \
+    rm -rf /var/lib/apt/lists/*
 
+# Ensure `npx` is installed
+RUN npm --version && npx --version
+# Copy over the application source code
+COPY . /app
+# Update Browserslist database
+RUN npx update-browserslist-db@latest
+RUN npm install --check-files
+# Install packages needed for deployment
+RUN apt-get update -qq && apt-get install -y libpq-dev
+RUN apt-get update -qq && apt-get install -y dos2unix
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl libvips postgresql-client && \
+    rm -rf /var/lib/apt/lists/*
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
@@ -40,10 +59,6 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Final stage for app image
 FROM base
 
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips postgresql-client && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
