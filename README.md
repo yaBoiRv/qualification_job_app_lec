@@ -5,7 +5,34 @@
 
 ## Priekšnosacījumi
 Lai veiksmīgi palaistu šo Ruby on Rails lietotni, ir nepieciešami šādi priekšnosacījumi:
+## Izmantojot docker container:
+Nepieciešamās docker versijas
+```bash
+# docker -v                                                                 
+Docker version 20.10.11, build dea9396
 
+# docker-compose -v                                                                  
+Docker Compose version v2.13.0
+
+```
+
+1. Klonējiet repozitoriju uz savu datoru:
+```javascript
+git clone https://github.com/yaBoiRv/app_lec.git
+```
+2. Pārejiet uz lietotnes mapi:
+```javascript
+ cd ceļš/uz/app_lec
+```
+3. Izpildiet komandu:
+```javascript
+ docker compose build
+ docker compose up
+```
+4. Atveriet pārlūkprogrammu un ievadiet šādu adresi, lai piekļūtu vietnei - http://127.0.0.1:3000/
+
+
+## Izveidot izmantojot lokālu atmiņu: 
 1. Ruby: Lejupielādējiet un instalējiet Ruby versiju '3.2.2'. Pārliecinieties, ka Ruby ir pareizi instalēts, izpildot ruby -v.
 2. Bundler: Instalējiet bundler gem, kas tiek izmantots atkarību pārvaldībai. Izpildiet gem install bundler -v 2.5.3.
 3. PostgreSQL: Instalējiet PostgreSQL datubāzi. Pārliecinieties, ka tā darbojas un lietotājam ir atbilstošas tiesības.
@@ -60,7 +87,7 @@ bin/dev
 
 ## Potenciālie labojumi
 
-1. Pārvieot datubāzi uz docker konteineri
+~~1. Pārvieot datubāzi uz docker konteineri~~
 2. Iekļaut Javascript bibliotēkas iekš rails pipeline(pašlaik tiek izmantota CDN metode)
 3. Izveidot rspec testus
 
@@ -76,15 +103,41 @@ Ja jums nepieciešama palīdzība vai atbalsts, apskatiet šos resursus:
 [PostgreSQL dokumentācija](https://www.postgresql.org/docs/)
 [Tailwind CSS dokumentācija](https://tailwindcss.com/docs/installation)
 
-Šis README nodrošina strukturētu veidu, kā iestatīt, konfigurēt, un palaist Ruby on Rails lietotni, sniedzot visus būtiskos soļus un piezīmes par priekšnosacījumiem. Tas ietver nepieciešamās komandas, lai izveidotu un konfigurētu PostgreSQL datubāzi, instalētu Ruby on Rails, un palaistu lietotni.
 
 # EN
 ## Introduction
 This README provides instructions on launching a website built using Ruby on Rails with Tailwind CSS and PostgreSQL.
 
 ## Prerequisites
-Lai veiksmīgi palaistu šo Ruby on Rails lietotni, ir nepieciešami šādi priekšnosacījumi:
+To successfully run this Ruby on Rails application, the following prerequisites are required:
 
+## Using docker container:
+Required docker versions
+```bash
+# docker -v                                                                 
+Docker version 20.10.11, build dea9396
+
+# docker-compose -v                                                                  
+Docker Compose version v2.13.0
+
+```
+
+1. Clone the repository to your computer:
+```javascript
+git clone https://github.com/yaBoiRv/app_lec.git
+```
+2. Move to the application's folder:
+```javascript
+  cd path/to/app_lec
+```
+3. Run the command:
+```javascript
+ docker compose build
+ docker compose up
+```
+4. 4. Open a web browser and enter the following address to access the website - http://127.0.0.1:3000/
+
+## Izveidot izmantojot lokālu atmiņu: 
 1. Ruby: Download and install Ruby version '3.2.2'. Ensure Ruby is installed correctly by running ruby -v.
 2. Bundler: Install the bundler gem, which is used for dependency management. Run gem install bundler -v 2.5.3.
 3. PostgreSQL: Install the PostgreSQL database. Make sure it is running and the user has appropriate permissions.
@@ -139,7 +192,7 @@ bin/dev
 
 ## Potential Improvements
 
-1. Migrate the database to a Docker container.
+~~1. Migrate the database to a Docker container.~~
 2. Include JavaScript libraries in the Rails pipeline (currently using the CDN method).
 3. Create rspec tests.
 
@@ -154,5 +207,3 @@ If you need help or support, check these resources:
 [Ruby on Rails Documentation](https://guides.rubyonrails.org)
 [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 [Tailwind CSS Documentation](https://tailwindcss.com/docs/installation)
-
-This README provides a structured way to set up, configure, and run a Ruby on Rails application, outlining all essential steps and notes about prerequisites. It includes the necessary commands to create and configure a PostgreSQL database, install Ruby on Rails, and run the application.
