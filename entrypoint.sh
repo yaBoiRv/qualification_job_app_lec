@@ -2,8 +2,9 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-# Check if the database exists
-bundle exec rails db:prepare
+# Move to the app directory
+cd /app
 
-# Start the Rails server
-exec "$@"
+# Install dependencies and prepare the database
+bundle exec rails db:prepare
+bundle exec rails server -b 0.0.0.0

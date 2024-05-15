@@ -10,16 +10,15 @@
 #       Install PostgreSQL and put its /bin directory on your path.
 #
 # Configure Using Gemfile
-# gem "pg"
+# gem "pg"/
 #
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
-  username: admin
-  password: admin
-  host: localhost
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV['POSTGRES_USER'] || 'admin' %>
+  password: <%= ENV['POSTGRES_PASSWORD'] || 'admin' %>
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
 
 development:
   <<: *default
@@ -82,5 +81,5 @@ test:
 production:
   <<: *default
   database: app_lec_production
-  username: aadmin
+  username: admin
   password: <%= ENV["APP_LEC_DATABASE_PASSWORD"] %>

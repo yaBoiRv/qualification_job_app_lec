@@ -71,15 +71,12 @@ gem 'simple_form'
 gem 'tailwindcss-rails', '~> 2.1'
 # Gemfile
 gem 'jquery-rails'
-group :development do
-  gem 'pry-rails'
-end
 gem 'carrierwave'
 gem 'execjs'
 gem 'flatpickr'
 gem 'kaminari'
 gem 'momentjs-rails'
-gem 'webpacker'
 group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'pry-rails'
 end
