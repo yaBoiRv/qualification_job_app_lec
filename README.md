@@ -88,8 +88,10 @@ bin/dev
 ## Potenciālie labojumi
 
 ~~1. Pārvieot datubāzi uz docker konteineri~~
+
 2. Iekļaut Javascript bibliotēkas iekš rails pipeline(pašlaik tiek izmantota CDN metode)
-3. Izveidot rspec testus
+   
+4. Izveidot rspec testus
 
 ## Papildu piezīmes
 
@@ -193,8 +195,10 @@ bin/dev
 ## Potential Improvements
 
 ~~1. Migrate the database to a Docker container.~~
+
 2. Include JavaScript libraries in the Rails pipeline (currently using the CDN method).
-3. Create rspec tests.
+
+4. Create rspec tests.
 
 ## Additional Notes
 
