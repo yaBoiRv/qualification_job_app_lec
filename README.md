@@ -18,11 +18,11 @@ Docker Compose version v2.13.0
 
 1. Klonējiet repozitoriju uz savu datoru:
 ```javascript
-git clone https://github.com/yaBoiRv/app_lec.git
+git clone https://github.com/yaBoiRv/qualification_job_app_lec.git
 ```
 2. Pārejiet uz lietotnes mapi:
 ```javascript
- cd ceļš/uz/app_lec
+ cd ceļš/uz/qualification_job_app_lec
 ```
 3. Izpildiet komandu:
 ```javascript
@@ -43,11 +43,11 @@ git clone https://github.com/yaBoiRv/app_lec.git
 
 1. Klonējiet repozitoriju uz savu datoru:
 ```javascript
-git clone https://github.com/yaBoiRv/app_lec.git
+git clone https://github.com/yaBoiRv/qualification_job_app_lec.git
 ```
 2. Pārejiet uz lietotnes mapi:
 ```javascript
- cd ceļš/uz/app_lec
+ cd ceļš/uz/qualification_job_app_lec
 ```
 3. Instalējiet nepieciešamos gem - Bundle install
 ```javascript
@@ -59,7 +59,7 @@ Lai sagatavotu PostgreSQL datubāzi:
 
 1. Pārejiet uz lietotnes mapi:
 ```javascript
-cd ceļš/uz/app_lec
+cd ceļš/uz/qualification_job_app_lec
 ```
 2. Izveidojiet datubāzi, ja tā vēl nepastāv:
 ```javascript
@@ -77,7 +77,7 @@ Lai palaistu Ruby on Rails lietotni:
 
 1. Atveriet termināli un pārejiet uz lietotnes mapi:
 ```javascript
-cd ceļš/uz/app_lec
+cd ceļš/uz/qualification_job_app_lec
 ```
 2. Sāciet Rails serveri:
 ```javascript
@@ -126,11 +126,11 @@ Docker Compose version v2.13.0
 
 1. Clone the repository to your computer:
 ```javascript
-git clone https://github.com/yaBoiRv/app_lec.git
+git clone https://github.com/yaBoiRv/qualification_job_app_lec.git
 ```
 2. Move to the application's folder:
 ```javascript
-  cd path/to/app_lec
+  cd path/to/qualification_job_app_lec
 ```
 3. Run the command:
 ```javascript
@@ -150,11 +150,11 @@ git clone https://github.com/yaBoiRv/app_lec.git
 
 1. Clone the repository to your computer:
 ```javascript
-git clone https://github.com/yaBoiRv/app_lec.git
+git clone https://github.com/yaBoiRv/qualification_job_app_lec.git
 ```
 2. Move to the application's folder:
 ```javascript
-  cd path/to/app_lec
+  cd path/to/qualification_job_app_lec
 ```
 3. Install the required gems:
 ```javascript
@@ -184,7 +184,7 @@ To run the Ruby on Rails application:
 
 1. Open a terminal and move to the application's folder:
 ```javascript
-cd path/to/app_lec
+cd path/to/qualification_job_app_lec
 ```
 2. Start the Rails server:
 ```javascript
