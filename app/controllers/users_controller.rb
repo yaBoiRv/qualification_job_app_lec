@@ -71,13 +71,30 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    # Find calendar groups where the user is an admin
+    admin_groups = CalendarGroup.where(admin_id: @user.id)
+
+    # Iterate over each admin group
+    admin_groups.each do |group|
+      # Find participant reservations associated with this group
+      reservations = ParticipantReservation.where(calendar_group_id: group.id)
+
+      # If the admin group has only one participant reservation,
+      # delete the calendar group
+      if reservations.count <= 1
+        group.destroy
+      else
+        # If there are other participants, transfer admin role
+        # to the first participant
+        first_participant = reservations.first
+        group.update(admin_id: first_participant.created_by_id)
+      end
+    end
     if @user.destroy
       redirect_to welcome_page_url, notice: "Jūsu profils ir veiksmīgi dzēsts!"
     else
-      render :profile, alert: "Neizdevās dzēst profilu!"
+      redirect_to welcome_page_url, error: "Radās kļūda dzēšot profilu!"
     end
-    session[:user_id] = nil
-    redirect_to welcome_page_url, notice: 'Jūsu profils ir veiksmīgi dzēsts!'
   end
 
   def search
@@ -131,6 +148,14 @@ class UsersController < ApplicationController
     @calendar_group.group_name = "#{user.username} kalendāra grupa"
     @calendar_group.users << user
     @calendar_group.save
+  end
+
+  def error_message
+    if @user.errors.any?
+      @user.errors.full_messages.join(", ")
+    else
+      "An unknown error occurred."
+    end
   end
 
   def user_params

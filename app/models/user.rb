@@ -4,7 +4,7 @@
 class User < ApplicationRecord
   # ----calendar reservations
   has_many :calendar_participant_join_tables, dependent: :destroy
-  has_many :calendar_groups, through: :calendar_participant_join_tables, dependent: :destroy
+  has_many :calendar_groups, through: :calendar_participant_join_tables
   has_many :exercises, dependent: :destroy
   has_many :pending_associations, dependent: :destroy
   #------related to all courses and exercises----------------
