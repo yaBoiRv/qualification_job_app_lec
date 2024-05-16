@@ -14,31 +14,31 @@
     <%end%>
     <h2 class="text-2xl font-semibold mb-4 mt-4 text-gray-800">Reģistrēties</h2>
     <div class="mb-4">
-      <label for="user_name" class="block text-gray-700 text-sm font-bold mb-2">Vārds</label>
+      <label for="user_name" class="block text-gray-700 text-sm font-bold mb-2">Vārds <span class="text-red-500">*</span></label>
       <input type="text" name="user[name]" id="user_name" class="form-input w-full focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4">
-      <label for="user_surname" class="block text-gray-700 text-sm font-bold mb-2">Uzvārds</label>
+      <label for="user_surname" class="block text-gray-700 text-sm font-bold mb-2">Uzvārds <span class="text-red-500">*</span></label>
       <input type="text" name="user[surname]" id="user_surname" class="form-input w-full focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4">
-      <label for="user_username" class="block text-gray-700 text-sm font-bold mb-2">Lietotājvārds</label>
+      <label for="user_username" class="block text-gray-700 text-sm font-bold mb-2">Lietotājvārds <span class="text-red-500">*</span></label>
       <input type="text" name="user[username]" id="user_username" class="form-input w-full focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4">
-      <label for="user_email" class="block text-gray-700 text-sm font-bold mb-2">E-pasts</label>
+      <label for="user_email" class="block text-gray-700 text-sm font-bold mb-2">E-pasts <span class="text-red-500">*</span></label>
       <input type="email" name="user[email]" id="user_email" class="form-input w-full focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4">
-      <label for="user_password" class="block text-gray-700 text-sm font-bold mb-2">Parole</label>
+      <label for="user_password" class="block text-gray-700 text-sm font-bold mb-2">Parole <span class="text-red-500">*</span></label>
       <input type="password" name="user[password]" id="user_password" class="form-input w-full focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4">
-      <label for="user_password_confirmation" class="block text-gray-700 text-sm font-bold mb-2">Paroles apstiprinājums</label>
+      <label for="user_password_confirmation" class="block text-gray-700 text-sm font-bold mb-2">Paroles apstiprinājums <span class="text-red-500">*</span></label>
       <input type="password" name="user[password_confirmation]" id="user_password_confirmation" class="form-input w-full focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4">
-      <%= form.label :avatar, class: "block text-gray-700 text-sm font-semibold mb-2" %>
+      <%= form.label :avatar, "Profila attēls", class: "block text-gray-700 text-sm font-semibold mb-2" %>
       <%= form.file_field :avatar, id: "avatar-input", class: "form-input w-full focus:outline-none focus:shadow-outline" %>
     </div>
     <div class="flex items-center mb-5">

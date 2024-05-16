@@ -71,7 +71,11 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
+    if @user.destroy
+      redirect_to welcome_page_url, notice: "Jūsu profils ir veiksmīgi dzēsts!"
+    else
+      render :profile, alert: "Neizdevās dzēst profilu!"
+    end
     session[:user_id] = nil
     redirect_to welcome_page_url, notice: 'Jūsu profils ir veiksmīgi dzēsts!'
   end

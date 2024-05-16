@@ -8,11 +8,11 @@
         <%= form.date_field :date, id: "reservation_date", class: "mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
       </div>
       <div class="text-left">
-        <%= form.label :time_from, "Laiks no", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.label :time_from, "Laiks no", class: "block text-sm font-medium text-gray-700" %> <span class="text-red-500">*</span>
         <%= form.text_field :time_from, id: "reservation_time_from", class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
       </div>
       <div class="text-left">
-        <%= form.label :time_to, "Laiks līdz", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.label :time_to, "Laiks līdz", class: "block text-sm font-medium text-gray-700" %> <span class="text-red-500">*</span>
         <%= form.text_field :time_to, id: "reservation_time_to", class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"%>
       </div>
       <!-- Comments Textarea -->
