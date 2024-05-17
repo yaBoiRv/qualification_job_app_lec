@@ -1,17 +1,8 @@
-<!-- app/views/errors/404.html.erb -->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <div class="mt-10">
-      <title>404 Not Found</title>
-    </head>
-    <body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
-      <div class="max-w-lg text-center">
-        <h1 class="text-4xl font-bold text-gray-800 mb-4">404 Nav atrasts meklētais</h1>
-        <p class="text-gray-600 mb-4">Lapa, kuru meklējat, varētu būt dzēsta, tās nosaukums varētu būt mainījies vai pagaidām nav pieejama.</p>
-        <a href="<%= welcome_page_url %>" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">Atgriezties uz sākumlapu</a>
-      </div>
-    </body>
-  </html>
+<!-- app/views/errors/not_found.html.erb -->
+<div class="flex items-center justify-center min-h-screen mt-5">
+  <div class="max-w-lg text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-4">404 Nav atrasts meklētais</h1>
+    <p class="text-gray-600 mb-4">Lapa, kuru meklējat, varētu būt dzēsta, tās nosaukums varētu būt mainījies vai pagaidām nav pieejama.</p>
+    <a href="<%= welcome_page_url %>" class="inline-block bg-gray-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">Atgriezties uz sākumlapu</a>
+  </div>
+</div>
