@@ -25,6 +25,9 @@ RUN curl -sS https://deb.nodesource.com/setup_18.x | bash && \
     apt-get update -qq && apt-get install -y yarn && \
     rm -rf /var/lib/apt/lists/*
 
+    # Install ImageMagick
+RUN apt-get update -qq && apt-get install -y imagemagick && rm -rf /var/lib/apt/lists/*
+
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
