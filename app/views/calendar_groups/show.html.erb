@@ -160,6 +160,7 @@
   var newReservationLink = document.getElementById('newReservationLink');
   const reservationForm = document.querySelector('.new-reservation-container');
   const closeBtn = document.getElementById('closeReservationForm');
+  var clickedDate;
   document.addEventListener('DOMContentLoaded', function() {
   var currentUserIDElement = document.getElementById('current-user-id');
     var calendarEl = document.getElementById('calendar');
@@ -263,6 +264,7 @@
       var currentDate = new Date();
       currentDate.setHours(0, 0, 0, 0);
       var clickedDateTime = new Date(clickedDate);
+      console.log(clickedDate)
       clickedDateTime.setHours(0, 0, 0, 0);
 
       if (clickedDateTime < currentDate) {
@@ -306,7 +308,7 @@
           locale: 'lv',
           dateFormat: "Y-m-d",
           minDate: "today", // Prevent selection of past dates
-          defaultDate: "today", // Set the default date to today's date
+          defaultDate: clickedDate, // Set the default date to today's date
           onChange: function(selectedDates, dateStr, instance) {
               var selectedDate = selectedDates[0];
               var today = new Date();
@@ -331,13 +333,13 @@
           dateFormat: "H:i",
           time_24hr: true
       };
-
+      
       flatpickr(fromInput, Object.assign({}, timeConfig, {
-          minTime: (dateInput.value === currentDate.toLocaleDateString('en-CA')) ? `${currentHour}:${currentMinute}` : "00:00"
+          minTime: (clickedDate === currentDate.toLocaleDateString('en-CA')) ? `${currentHour}:${currentMinute}` : "00:00"
       }));
 
       flatpickr(toInput, Object.assign({}, timeConfig, {
-          minTime: (dateInput.value === currentDate.toLocaleDateString('en-CA')) ? `${currentHour}:${currentMinute}` : "00:00"
+          minTime: (clickedDate === currentDate.toLocaleDateString('en-CA')) ? `${currentHour}:${currentMinute}` : "00:00"
       }));
 
       // Handle onchange event for 'toInput'
@@ -365,7 +367,7 @@
     var targetDateElement = event.target.closest('.fc-daygrid-day');
       if (targetDateElement && !event.target.closest('.fc-event')) {
         // Get the clicked date
-        var clickedDate = targetDateElement.getAttribute('data-date');
+        clickedDate = targetDateElement.getAttribute('data-date');
 
         if (clickedDate) {
 
