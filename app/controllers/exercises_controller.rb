@@ -87,7 +87,7 @@ class ExercisesController < ApplicationController
         # Remove associated records from horse_exercises table
         HorseExercise.where(exercise_id: exercise.id).destroy_all
       end
-    when 'marsuts'
+    when 'marsruts'
       case exercise.animal_type
       when 'Ponijs'
         # Remove associated records from pony_courses table
@@ -120,7 +120,7 @@ class ExercisesController < ApplicationController
       end
     end
 
-    if exercise.public? && exercise.exercise_type == 'marsuts'
+    if exercise.public? && exercise.exercise_type == 'marsruts'
       if exercise.animal_type == 'Ponijs'
         existing_record = PonyCourse.find_by(title: exercise.exercise_name)
         if existing_record

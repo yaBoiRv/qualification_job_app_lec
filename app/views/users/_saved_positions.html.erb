@@ -42,7 +42,7 @@
 <% end %>
 <% if current_user.horse_courses_users.present? %>
   <div class="border-b border-gray-600 mb-4 pb-4 ml-5 shadow-md text-center" x-data="{ open: false, openUsed: false, openUnused: false }">
-    <h2 @click="open = !open" class="font-bold cursor-pointer">Zirgu maršuti</h2>
+    <h2 @click="open = !open" class="font-bold cursor-pointer">Zirgu maršruti</h2>
     <div x-show="open">
       <!-- Used Horse Courses -->
       <% used_horse_courses = current_user.horse_courses_users.select { |hc| hc.used } %>
@@ -120,7 +120,7 @@
 <% end %>
 <% if current_user.pony_courses_users.present? && current_user.pony_courses_users.exists?(saved: true) %>
   <div class="border-b border-gray-600 mb-4 pb-4 ml-5 shadow-md text-center" x-data="{ open: false, openUsed: false, openUnused: false }">
-    <h2 @click="open = !open" class="font-bold cursor-pointer">Poniju maršuti</h2>
+    <h2 @click="open = !open" class="font-bold cursor-pointer">Poniju maršruti</h2>
     <div x-show="open">
       <!-- Used Pony Courses -->
       <% used_pony_courses = current_user.pony_courses_users.select { |pc| pc.used } %>

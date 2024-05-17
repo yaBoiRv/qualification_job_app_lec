@@ -5,11 +5,11 @@ class CoursePositionsController < ApplicationController
     choice = params[:choice]
 
     case choice
-    when 'Poniju maršuti'
+    when 'Poniju maršruti'
       @pony_courses = PonyCourse.order(created_at: :desc).page(params[:page]).per(8)
     when 'Poniju vingrinājumi'
       @pony_exercises = PonyExercise.order(created_at: :desc).page(params[:page]).per(8)
-    when 'Zirgu maršuti'
+    when 'Zirgu maršruti'
       @horse_courses = HorseCourse.order(created_at: :desc).page(params[:page]).per(8)
     when 'Zirgu vingrinājumi'
       @horse_exercises = HorseExercise.order(created_at: :desc).page(params[:page]).per(8)
@@ -33,11 +33,11 @@ class CoursePositionsController < ApplicationController
   def save_horse_course
     @exercise = HorseCourse.find(params[:id])
     if current_user.horse_courses_users.exists?(horse_course_id: @exercise.id, saved: true)
-      flash[:alert] = 'Maršuts jau ir saglabāts.'
+      flash[:alert] = 'Maršruts jau ir saglabāts.'
     else
       current_user.horse_courses << @exercise
       @exercise.horse_courses_users.find_or_create_by(user_id: current_user.id).update(saved: true)
-      flash[:notice] = 'Maršuts veiksmīgi saglabāts'
+      flash[:notice] = 'Maršruts veiksmīgi saglabāts'
     end
     redirect_back(fallback_location: welcome_page_path)
   end
@@ -45,11 +45,11 @@ class CoursePositionsController < ApplicationController
   def save_pony_course
     @exercise = PonyCourse.find(params[:id])
     if current_user.pony_courses_users.exists?(pony_course_id: @exercise.id, saved: true)
-      flash[:alert] = 'Maršuts jau ir saglabāts.'
+      flash[:alert] = 'Maršruts jau ir saglabāts.'
     else
       current_user.pony_courses << @exercise
       @exercise.pony_courses_users.find_or_create_by(user_id: current_user.id).update(saved: true)
-      flash[:notice] = 'Maršuts veiksmīgi saglabāts'
+      flash[:notice] = 'Maršruts veiksmīgi saglabāts'
     end
     redirect_back(fallback_location: welcome_page_path)
   end
@@ -82,7 +82,7 @@ class CoursePositionsController < ApplicationController
     horse_course_user = current_user.horse_courses_users.find_by(horse_course_id: @exercise.id)
     if horse_course_user&.used
       horse_course_user.update(saved: false)
-      redirect_to profile_path, notice: 'Maršuts ir veiksmīgi noņemts'
+      redirect_to profile_path, notice: 'Maršruts ir veiksmīgi noņemts'
     else
       current_user.horse_courses.delete(@exercise)
     end
@@ -93,7 +93,7 @@ class CoursePositionsController < ApplicationController
     pony_course_user = current_user.pony_courses_users.find_by(pony_course_id: @exercise.id)
     if pony_course_user&.used
       pony_course_user.update(saved: false)
-      redirect_to profile_path, notice: 'Maršuts ir veiksmīgi noņemts'
+      redirect_to profile_path, notice: 'Maršruts ir veiksmīgi noņemts'
     else
       current_user.pony_courses.delete(@exercise)
     end
@@ -130,7 +130,7 @@ class CoursePositionsController < ApplicationController
     @course = HorseCourse.find(params[:id])
     horse_course_user = current_user.horse_courses_users.find_by(horse_course_id: @course.id)
     horse_course_user.update(used: true)
-    redirect_to profile_path, notice: 'Maršuts ir atzīmēts kā izmantots'
+    redirect_to profile_path, notice: 'Maršruts ir atzīmēts kā izmantots'
   end
 
   # Mark Horse Course as unused
@@ -138,7 +138,7 @@ class CoursePositionsController < ApplicationController
     @course = HorseCourse.find(params[:id])
     horse_course_user = current_user.horse_courses_users.find_by(horse_course_id: @course.id)
     horse_course_user.update(used: false)
-    redirect_to profile_path, notice: 'Maršuts ir atzīmēts kā neizmantots'
+    redirect_to profile_path, notice: 'Maršruts ir atzīmēts kā neizmantots'
   end
 
   # Mark Pony Exercise as used
@@ -162,7 +162,7 @@ class CoursePositionsController < ApplicationController
     @course = PonyCourse.find(params[:id])
     pony_course_user = current_user.pony_courses_users.find_by(pony_course_id: @course.id)
     pony_course_user.update(used: true)
-    redirect_to profile_path, notice: 'Maršuts ir atzīmēts kā izmantots'
+    redirect_to profile_path, notice: 'Maršruts ir atzīmēts kā izmantots'
   end
 
   # Mark Pony Course as unused
@@ -170,6 +170,6 @@ class CoursePositionsController < ApplicationController
     @course = PonyCourse.find(params[:id])
     pony_course_user = current_user.pony_courses_users.find_by(pony_course_id: @course.id)
     pony_course_user.update(used: false)
-    redirect_to profile_path, notice: 'Maršuts ir atzīmēts kā neizmantots'
+    redirect_to profile_path, notice: 'Maršruts ir atzīmēts kā neizmantots'
   end
 end
