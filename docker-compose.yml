@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: app_lec_development
+      POSTGRES_DB: app_lec_production
     ports:
       - "5432:5432"
   
@@ -25,7 +25,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       DATABASE_HOST: db
-      RAILS_ENV: development
+      RAILS_ENV: production
 
 volumes:
   pg_data:

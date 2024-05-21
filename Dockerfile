@@ -11,7 +11,7 @@ WORKDIR /app
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITH="development"
+    BUNDLE_WITH="production"
 
 # Install system dependencies and PostgreSQL client libraries in base image
 RUN apt-get update -qq && apt-get install -y libpq-dev curl && rm -rf /var/lib/apt/lists/*

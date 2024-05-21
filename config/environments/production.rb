@@ -89,6 +89,20 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  config.action_controller.raise_on_missing_callback_actions = true
+  config.consider_all_requests_local = false
+  config.i18n.default_locale = :lv
+
+  config.action_mailer.smtp_settings = {
+    address: 'mail.inbox.lv',
+    port: 465, # or 465 if using SSL
+    user_name: 'lecapp',
+    password: '13GDTkjg7Y',
+    authentication: :login,
+    enable_starttls_auto: true,
+    openssl_verify_mode: 'none', # Use this line if you're using self-signed certificates
+    tls: true
+  }
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
