@@ -243,7 +243,7 @@
 
         content.appendChild(infoBoxContent);
 
-        content.classList.add('border', 'rounded', 'p-2', 'w-full');
+        content.classList.add('border', 'rounded', 'p-2', 'w-full', 'truncate');
 
         if (currentUserID == arg.event.extendedProps.created_by_id) {
           content.classList.add('bg-green-200');
@@ -402,8 +402,9 @@
   }
 
   function openReservationPopup(element, arg, reservationDetails) {
-        var isCreatedByCurrentUser = checkIfReservationIsCreatedByCurrentUser(arg, currentUserId); // Function to check if the reservation is created by the current user
+       // Function to check if the reservation is created by the current user
         var currentUserId = <%= current_user.id %>;
+        var isCreatedByCurrentUser = checkIfReservationIsCreatedByCurrentUser(arg, currentUserId);
         var isAdmin = <%= admin? %>; // Function to check if the current user is an admin
         if ( isAdmin || isCreatedByCurrentUser ) {
           var reservationId = arg.event.extendedProps.reservation_id;
