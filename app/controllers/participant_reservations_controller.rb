@@ -20,7 +20,7 @@ class ParticipantReservationsController < ApplicationController
 
   def edit
     @calendar_group = CalendarGroup.find(params[:calendar_group_id])
-    @reservation = @calendar_participant_join_table.participant_reservations.find(params[:id])
+    @reservation = @calendar_group.participant_reservations.find(params[:id])
   end
 
   def create
@@ -122,8 +122,7 @@ class ParticipantReservationsController < ApplicationController
   end
 
   def set_calendar_participant_join_table
-    @calendar_participant_join_table = CalendarParticipantJoinTable.find_or_create_by(user: current_user,
-                                                                                      calendar_group: @calendar_group)
+    @calendar_participant_join_table = CalendarParticipantJoinTable.find_or_create_by(calendar_group: @calendar_group)
   end
 
   def reservation_params
