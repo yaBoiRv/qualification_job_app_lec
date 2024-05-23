@@ -92,6 +92,8 @@ bin/dev
 2. Iekļaut Javascript bibliotēkas iekš rails pipeline(pašlaik tiek izmantota CDN metode)
    
 4. Izveidot rspec testus
+   
+5. Pārvietojiet kalendāra grupu rezervēšanas loģiku no js uz lielākoties uz sistēmas aizmuguri
 
 ## Papildu piezīmes
 
@@ -199,6 +201,8 @@ bin/dev
 2. Include JavaScript libraries in the Rails pipeline (currently using the CDN method).
 
 4. Create rspec tests.
+
+5. Move calendar group reservation logic from js to mostly backend
 
 ## Additional Notes
 
