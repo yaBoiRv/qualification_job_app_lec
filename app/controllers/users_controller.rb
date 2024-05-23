@@ -91,9 +91,9 @@ class UsersController < ApplicationController
       end
     end
     if @user.destroy
-      redirect_to welcome_page_url, notice: "Jūsu profils ir veiksmīgi dzēsts!"
+      redirect_to welcome_page_url, notice: 'Jūsu profils ir veiksmīgi dzēsts!'
     else
-      redirect_to welcome_page_url, error: "Radās kļūda dzēšot profilu!"
+      redirect_to welcome_page_url, error: 'Radās kļūda dzēšot profilu!'
     end
   end
 
@@ -152,9 +152,9 @@ class UsersController < ApplicationController
 
   def error_message
     if @user.errors.any?
-      @user.errors.full_messages.join(", ")
+      @user.errors.full_messages.join(', ')
     else
-      "An unknown error occurred."
+      'An unknown error occurred.'
     end
   end
 

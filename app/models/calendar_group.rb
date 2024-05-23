@@ -8,7 +8,6 @@ class CalendarGroup < ApplicationRecord
   has_many :pending_associations, dependent: :destroy
   has_many :users, through: :calendar_participant_join_tables, validate: false
 
-
   accepts_nested_attributes_for :calendar_horses, allow_destroy: true
   accepts_nested_attributes_for :calendar_ponies, allow_destroy: true
 

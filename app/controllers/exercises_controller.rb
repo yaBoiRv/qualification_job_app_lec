@@ -27,7 +27,8 @@ class ExercisesController < ApplicationController
         if !success
           render :new # Re-render the form with errors
         else
-          redirect_to exercises_path(selected_exercise_id: @exercise.id), notice: 'Vingrinājums tika veiksmīgi izveidots.'
+          redirect_to exercises_path(selected_exercise_id: @exercise.id),
+                      notice: 'Vingrinājums tika veiksmīgi izveidots.'
         end
       else
         redirect_to exercises_path(selected_exercise_id: @exercise.id), notice: 'Vingrinājums tika veiksmīgi izveidots.'
@@ -47,17 +48,18 @@ class ExercisesController < ApplicationController
       if !@exercise.public?
         remove_associated_records(@exercise)
         redirect_to exercises_path(selected_exercise_id: @exercise.id),
-                      notice: 'Vingrinājums tika veiksmīgi atjaunināts'
+                    notice: 'Vingrinājums tika veiksmīgi atjaunināts'
       else
         if was_public && (old_exercise_type != @exercise.exercise_type || old_animal_type != @exercise.animal_type)
-          remove_associated_records(OpenStruct.new(exercise_type: old_exercise_type, animal_type: old_animal_type, id: @exercise.id))
+          remove_associated_records(OpenStruct.new(exercise_type: old_exercise_type, animal_type: old_animal_type,
+                                                   id: @exercise.id))
         end
         success = create_associated_records(@exercise)
         if !success
           render :edit # Re-render the form with errors
         else
           redirect_to exercises_path(selected_exercise_id: @exercise.id),
-                        notice: 'Vingrinājums tika veiksmīgi atjaunināts.'
+                      notice: 'Vingrinājums tika veiksmīgi atjaunināts.'
         end
       end
     else
@@ -114,7 +116,7 @@ class ExercisesController < ApplicationController
       if exercise.animal_type == 'Ponijs'
         existing_record = PonyExercise.find_by(title: exercise.exercise_name)
         if existing_record && existing_record.exercise_id != exercise.id
-          exercise.errors.add(:base, "Nosaukums jau eksistē, lai padarītu publiski to nomainiet!")
+          exercise.errors.add(:base, 'Nosaukums jau eksistē, lai padarītu publiski to nomainiet!')
           return false
         end
         PonyExercise.create_with(description: exercise.exercise_description, canvas_image: exercise.canvas_image)
@@ -122,7 +124,7 @@ class ExercisesController < ApplicationController
       elsif exercise.animal_type == 'Zirgs'
         existing_record = HorseExercise.find_by(title: exercise.exercise_name)
         if existing_record && existing_record.exercise_id != exercise.id
-          exercise.errors.add(:base, "Nosaukums jau eksistē, lai padarītu publiski to nomainiet!")
+          exercise.errors.add(:base, 'Nosaukums jau eksistē, lai padarītu publiski to nomainiet!')
           return false
         end
         HorseExercise.create_with(description: exercise.exercise_description, canvas_image: exercise.canvas_image)
@@ -132,7 +134,7 @@ class ExercisesController < ApplicationController
       if exercise.animal_type == 'Ponijs'
         existing_record = PonyCourse.find_by(title: exercise.exercise_name)
         if existing_record && existing_record.exercise_id != exercise.id
-          exercise.errors.add(:base, "Nosaukums jau eksistē, lai padarītu publiski to nomainiet!")
+          exercise.errors.add(:base, 'Nosaukums jau eksistē, lai padarītu publiski to nomainiet!')
           return false
         end
         PonyCourse.create_with(description: exercise.exercise_description, canvas_image: exercise.canvas_image)
@@ -140,7 +142,7 @@ class ExercisesController < ApplicationController
       elsif exercise.animal_type == 'Zirgs'
         existing_record = HorseCourse.find_by(title: exercise.exercise_name)
         if existing_record && existing_record.exercise_id != exercise.id
-          exercise.errors.add(:base, "Nosaukums jau eksistē, lai padarītu publiski to nomainiet!")
+          exercise.errors.add(:base, 'Nosaukums jau eksistē, lai padarītu publiski to nomainiet!')
           return false
         end
         HorseCourse.create_with(description: exercise.exercise_description, canvas_image: exercise.canvas_image)

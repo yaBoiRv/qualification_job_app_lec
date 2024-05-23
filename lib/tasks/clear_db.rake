@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 namespace :db do
-  desc "Clear all records from the database"
+  desc 'Clear all records from the database'
   task clear_all: :environment do
     ActiveRecord::Base.connection.tables.each do |table|
       # Avoid truncating metadata tables
-      next if table == 'schema_migrations' || table == 'ar_internal_metadata'
+      next if %w[schema_migrations ar_internal_metadata].include?(table)
+
       # Truncate each table, reset identity, and cascade to maintain relationships
       ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{table} RESTART IDENTITY CASCADE")
     end
