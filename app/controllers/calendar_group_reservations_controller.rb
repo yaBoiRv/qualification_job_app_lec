@@ -13,7 +13,6 @@ class CalendarGroupReservationsController < ApplicationController
         reservation_id: reservation.id,
         calendar_group_id: reservation.calendar_group_id,
         calendar_participant_join_table_id: reservation.calendar_participant_join_table_id,
-        username:,
         start: reservation.date.strftime('%Y-%m-%dT%H:%M:%S'),
         end: reservation.date.strftime('%Y-%m-%dT%H:%M:%S'),
         real_date: reservation.date,
