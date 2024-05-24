@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # app/controllers/users_controller.rb
+require 'base64'
 class UsersController < ApplicationController
   before_action :set_user, only: [:update_password]
   def index
@@ -20,7 +21,22 @@ class UsersController < ApplicationController
   end
 
   def create
+
     @user = User.new(user_params)
+    if params[:cropped_image_data].present?
+      # Decode the Base64 image
+      image_data = Base64.decode64(params[:cropped_image_data].split(',')[1])
+      # Create a file from the decoded data
+      temp_img_file = Tempfile.new(['cropped_avatar', '.png'])
+      temp_img_file.binmode
+      temp_img_file.write(image_data)
+      temp_img_file.rewind
+
+      # Upload the image using CarrierWave
+      @user.avatar = temp_img_file
+      temp_img_file.close
+      temp_img_file.unlink # delete the temp file
+    end
     respond_to do |format|
       if @user.save
         create_calendar_group(@user)

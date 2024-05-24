@@ -40,6 +40,7 @@
     <div class="mb-4">
       <%= form.label :avatar, "Profila attēls", class: "block text-gray-700 text-sm font-semibold mb-2" %>
       <%= form.file_field :avatar, id: "avatar-input", class: "form-input w-full focus:outline-none focus:shadow-outline" %>
+      <%= hidden_field_tag 'cropped_image_data', '', id: 'croppedImageData' %>
     </div>
     <div class="flex items-center mb-5">
       <%= form.submit t('.register'), class: 'bg-gray-500 text-white font-bold py-2 px-4 rounded inline-block hover:bg-blue-900 hover:text-white transition duration-300 cursor-pointer' %>

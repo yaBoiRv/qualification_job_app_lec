@@ -82,4 +82,4 @@ production:
   <<: *default
   database: app_lec_production
   username: admin
-  password: <%= ENV["APP_LEC_DATABASE_PASSWORD"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>

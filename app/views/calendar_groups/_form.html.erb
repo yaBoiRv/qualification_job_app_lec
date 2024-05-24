@@ -259,8 +259,6 @@
     }
       initializeExistingUsers();
       function removeUser(userId) {
-        console.log("Removing user:", userId);
-
         // Remove user from the UI
         const userDiv = document.getElementById(`user-${userId}`);
         if (userDiv) {
@@ -379,8 +377,6 @@
               }
             })
             .then(response => {
-              // Handle response as needed
-              console.log(response);
               // Remove the user div from the DOM if the request was successful
               if (response.ok) {
                 userDiv.remove();

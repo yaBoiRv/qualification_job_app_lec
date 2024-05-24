@@ -24,7 +24,6 @@ function openPopup(element) {
     var fullImage = element.parentElement.parentElement.querySelector(".full-image");
     if (fullImage) {
             var exerciseName = element.closest('.popup-content').dataset.exerciseName;
-            console.log(exerciseName)
             var imageName = exerciseName.toLowerCase().replace(/\s+/g, '_');
             var link = document.createElement("a");
             link.href = fullImage.src;
