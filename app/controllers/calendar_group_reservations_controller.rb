@@ -7,8 +7,9 @@ class CalendarGroupReservationsController < ApplicationController
     @reservations = @calendar_group.participant_reservations.order(date: :asc, time_from: :asc)
 
     events = @reservations.map do |reservation|
-      username = User.find_by(id: reservation.created_by_id)&.username || 'Neeksitējošs lietotājs'
+
       {
+        username: User.find_by(id: reservation.created_by_id)&.username || 'Neeksitējošs lietotājs',
         created_by_id: reservation.created_by_id,
         reservation_id: reservation.id,
         calendar_group_id: reservation.calendar_group_id,
