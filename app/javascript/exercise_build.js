@@ -304,4 +304,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     initDraggableObjects();
 
+    // info box js
+    document.querySelectorAll('.image-container').forEach(container => {
+        const img = container.querySelector('.draggable-image');
+        const infoBox = container.querySelector('.info-box');
+
+        img.addEventListener('mouseenter', () => {
+        infoBox.style.display = 'block';
+        });
+        
+        img.addEventListener('mouseleave', () => {
+        infoBox.style.display = 'none';
+        });
+    });
 });
+
+  

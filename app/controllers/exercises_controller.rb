@@ -112,43 +112,62 @@ class ExercisesController < ApplicationController
   end
 
   def create_associated_records(exercise)
+    # Ja vingrinājums ir publisks un vingrinājuma veids ir 'vingrinajums'
     if exercise.public? && exercise.exercise_type == 'vingrinajums'
+      # Ja dzīvnieka tips ir 'Ponijs'
       if exercise.animal_type == 'Ponijs'
+        # Meklē esošu PonyExercise ar tādu pašu nosaukumu
         existing_record = PonyExercise.find_by(title: exercise.exercise_name)
+        # Ja eksistējošs ieraksts un tas nav saistīts ar pašreizējo vingrinājumu, pievieno kļūdu un atgriež false
         if existing_record && existing_record.exercise_id != exercise.id
           exercise.errors.add(:base, 'Nosaukums jau eksistē, lai padarītu publiski to nomainiet!')
           return false
         end
+        # Izveido vai atrod PonyExercise ar attiecīgajām īpašībām
         PonyExercise.create_with(description: exercise.exercise_description, canvas_image: exercise.canvas_image)
                     .find_or_create_by(title: exercise.exercise_name, exercise_id: exercise.id)
+      # Ja dzīvnieka tips ir 'Zirgs'
       elsif exercise.animal_type == 'Zirgs'
+        # Meklē esošu HorseExercise ar tādu pašu nosaukumu
         existing_record = HorseExercise.find_by(title: exercise.exercise_name)
+        # Ja eksistējošs ieraksts un tas nav saistīts ar pašreizējo vingrinājumu, pievieno kļūdu un atgriež false
         if existing_record && existing_record.exercise_id != exercise.id
           exercise.errors.add(:base, 'Nosaukums jau eksistē, lai padarītu publiski to nomainiet!')
           return false
         end
+        # Izveido vai atrod HorseExercise ar attiecīgajām īpašībām
         HorseExercise.create_with(description: exercise.exercise_description, canvas_image: exercise.canvas_image)
                      .find_or_create_by(title: exercise.exercise_name, exercise_id: exercise.id)
       end
+    # Ja vingrinājums ir publisks un vingrinājuma veids ir 'marsruts'
     elsif exercise.public? && exercise.exercise_type == 'marsruts'
+      # Ja dzīvnieka tips ir 'Ponijs'
       if exercise.animal_type == 'Ponijs'
+        # Meklē esošu PonyCourse ar tādu pašu nosaukumu
         existing_record = PonyCourse.find_by(title: exercise.exercise_name)
+        # Ja eksistējošs ieraksts un tas nav saistīts ar pašreizējo vingrinājumu, pievieno kļūdu un atgriež false
         if existing_record && existing_record.exercise_id != exercise.id
           exercise.errors.add(:base, 'Nosaukums jau eksistē, lai padarītu publiski to nomainiet!')
           return false
         end
+        # Izveido vai atrod PonyCourse ar attiecīgajām īpašībām
         PonyCourse.create_with(description: exercise.exercise_description, canvas_image: exercise.canvas_image)
                   .find_or_create_by(title: exercise.exercise_name, exercise_id: exercise.id)
+      # Ja dzīvnieka tips ir 'Zirgs'
       elsif exercise.animal_type == 'Zirgs'
+        # Meklē esošu HorseCourse ar tādu pašu nosaukumu
         existing_record = HorseCourse.find_by(title: exercise.exercise_name)
+        # Ja eksistējošs ieraksts un tas nav saistīts ar pašreizējo vingrinājumu, pievieno kļūdu un atgriež false
         if existing_record && existing_record.exercise_id != exercise.id
           exercise.errors.add(:base, 'Nosaukums jau eksistē, lai padarītu publiski to nomainiet!')
           return false
         end
+        # Izveido vai atrod HorseCourse ar attiecīgajām īpašībām
         HorseCourse.create_with(description: exercise.exercise_description, canvas_image: exercise.canvas_image)
                    .find_or_create_by(title: exercise.exercise_name, exercise_id: exercise.id)
       end
     end
+    # Ja visi nosacījumi ir izpildīti, atgriež true
     true
   end
 end

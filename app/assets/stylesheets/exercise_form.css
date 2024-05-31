@@ -1,6 +1,6 @@
 #step-indicators {
   display: flex;
-  justify-content: center; /* Center horizontally */
+  justify-content: center;
   align-items: center;
   margin-bottom: 5px;
 }
@@ -8,7 +8,7 @@
 #button-container {
   display: flex;
   align-items: center;
-  margin-top: 10px; /* Adjust top margin as needed */
+  margin-top: 10px;
   justify-content: center;
 }
 
@@ -25,8 +25,8 @@
 
 
 .current-step {
-  background-color: rgb(133, 134, 137); /* Change color to highlight the current step */
-  color: white; /* Change text color for better visibility */
+  background-color: rgb(133, 134, 137);
+  color: white;/
 }
 
 .draggable-svg {
@@ -41,11 +41,10 @@
     cursor: grabbing;
 }
 
-/* CSS for small screens */
 
 #buttons-container {
-  order: 1; /* Buttons container comes first in the HTML structure */
-  margin-right: 20px; /* Adjust spacing between buttons and canvas */
+  order: 1; 
+  margin-right: 20px;
 }
 
 canvas {
@@ -69,13 +68,39 @@ canvas {
 
 /* Make form fields responsive */
 input[type="text"],
-input[type="email"],
-input[type="password"],
 textarea,
 select {
-  width: 80%; /* Adjust width as desired */
-  max-width: 400px; /* Limit maximum width */
-  padding: 10px; /* Adjust padding */
-  font-size: 16px; /* Increase font size for better readability */
-  margin: 0 auto; /* Center align */
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.info-box {
+  display: none;
+  position: absolute;
+  max-width: 500px;  /* Increase the maximum width */
+  min-width: 150px;  /* Set a minimum width */
+  top: 100%;  /* Position the info box below the image */
+  left: 50%;
+  transform: translateX(-50%);  /* Center the info box horizontally */
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px;  /* Increase padding for better readability */
+  border-radius: 5px;
+  white-space: normal;  /* Allow text to wrap */
+  z-index: 10;
+}
+
+
+
+.image-container:hover .info-box {
+  display: block;
 }

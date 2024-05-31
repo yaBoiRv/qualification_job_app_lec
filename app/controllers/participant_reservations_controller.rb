@@ -81,8 +81,9 @@ class ParticipantReservationsController < ApplicationController
   private
 
   def check_reservation_overlap(reservation)
+    # Meklē rezervācijas, kurām ir tāda pati kalendāra grupas ID
     overlapping_reservations = ParticipantReservation.where(calendar_group_id: reservation.calendar_group_id)
-                                                     .where.not(id: reservation.id) # Exclude the current reservation if it's being updated
+                                                     .where.not(id: reservation.id) # Izslēdz pašreizējo rezervāciju, ja tā tiek atjaunināta
                                                      .where('(date = ? AND ((time_from <= ? AND time_to >= ?) OR (time_from <= ? AND time_to >= ?) OR (time_from >= ? AND time_to <= ?)))',
                                                             reservation.date,
                                                             reservation.time_from,
@@ -91,14 +92,17 @@ class ParticipantReservationsController < ApplicationController
                                                             reservation.time_to,
                                                             reservation.time_from,
                                                             reservation.time_to)
+    # Ja ir kādas pārklājošās rezervācijas, atgriež false
     return false if overlapping_reservations.any?
 
+    # Ja nav pārklājošās rezervācijas, atgriež true
     true
   end
 
   def check_reservation_overlap_allow_different_horse_pony(reservation)
+    # Meklē rezervācijas, kurām ir tāda pati kalendāra grupas ID, bet izslēdz pašreizējo rezervāciju, ja tā tiek atjaunināta
     overlapping_reservations = ParticipantReservation.where(calendar_group_id: reservation.calendar_group_id)
-                                                     .where.not(id: reservation.id) # Exclude the current reservation if it's being updated
+                                                     .where.not(id: reservation.id) # Izslēdz pašreizējo rezervāciju, ja tā tiek atjaunināta
                                                      .where(date: reservation.date)
                                                      .where('(time_from < ? AND time_to > ?) OR (time_from > ? AND time_from < ?) OR (time_to > ? AND time_to < ?)',
                                                             reservation.time_to,
@@ -108,12 +112,15 @@ class ParticipantReservationsController < ApplicationController
                                                             reservation.time_from,
                                                             reservation.time_to)
 
+    # Pārbauda katru pārklājošo rezervāciju
     overlapping_reservations.each do |r|
+      # Ja rezervācijās ir kopīgi zirgi vai poniji, atgriež false
       if (reservation.calendar_horse_ids & r.calendar_horse_ids).any? || (reservation.calendar_pony_ids & r.calendar_pony_ids).any?
         return false
       end
     end
 
+    # Ja nav kopīgu zirgu vai poniju pārklājošajās rezervācijās, atgriež true
     true
   end
 

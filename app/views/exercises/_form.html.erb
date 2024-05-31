@@ -26,12 +26,30 @@
         <%= form.text_area :exercise_description, rows: 5, class: "border-2 rounded-lg px-3 py-2 focus:outline-none focus:border-orange-700 block mx-auto" %>
       </div>
       <div id="svg-library" class="flex justify-center draggable-svg">
-        <img src="/assets/exercise_obsctacles/ob-1.svg" alt="ob-1" class="draggable-image w-10 h-10">
-        <img src="/assets/exercise_obsctacles/ob-2.svg" alt="ob-2" class="draggable-image w-20 h-10">
-        <img src="/assets/exercise_obsctacles/ob-3.svg" alt="ob-3" class="draggable-image w-20 h-10">
-        <img src="/assets/exercise_obsctacles/ob-4.svg" alt="ob-4" class="draggable-image w-20 h-10">
-        <img src="/assets/exercise_obsctacles/ob-5.svg" alt="ob-5" class="draggable-image w-20 h-10">
-        <img src="/assets/exercise_obsctacles/arrow.svg" alt="ob-6" class="draggable-image w-15 h-10">
+        <div class="image-container">
+          <img src="/assets/exercise_obsctacles/ob-1.svg" alt="ob-1" class="draggable-image w-10 h-10">
+          <div class="info-box">Okseris</div>
+        </div>
+        <div class="image-container">
+          <img src="/assets/exercise_obsctacles/ob-2.svg" alt="ob-2" class="draggable-image w-20 h-10">
+          <div class="info-box">Text</div>
+        </div>
+        <div class="image-container">
+          <img src="/assets/exercise_obsctacles/ob-3.svg" alt="ob-3" class="draggable-image w-20 h-10">
+          <div class="info-box">Text1</div>
+        </div>
+        <div class="image-container">
+          <img src="/assets/exercise_obsctacles/ob-4.svg" alt="ob-4" class="draggable-image w-20 h-10">
+          <div class="info-box">Kārtiņa</div>
+        </div>
+        <div class="image-container">
+          <img src="/assets/exercise_obsctacles/ob-5.svg" alt="ob-5" class="draggable-image w-20 h-10">
+          <div class="info-box">Text2</div>
+        </div>
+        <div class="image-container">
+          <img src="/assets/exercise_obsctacles/arrow.svg" alt="ob-6" class="draggable-image w-15 h-10">
+          <div class="info-box">Jāšanas virzienes norāde</div>
+        </div>
       </div>
       <div id="canvas-container" class="flex justify-center">
         <canvas id="canvas" width="900" height="400" class="border-2 rounded-lg" style="border:1px solid #000000;"></canvas>
@@ -68,7 +86,7 @@
 <% end %>
 <!-- Bottom Navigation Buttons -->
 <div id="step-indicators">
-  <div id="bottom-step-indicators" class=""> <!-- Adjusted classes here -->
+  <div id="bottom-step-indicators">
     <span class="step-indicator">1</span>
     <span class="step-indicator">2</span>
   </div>

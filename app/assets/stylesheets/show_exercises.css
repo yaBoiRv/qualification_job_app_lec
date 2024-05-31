@@ -4,25 +4,25 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999; /* ensure the popup appears above other content */
+    z-index: 999;
 }
 
 .popup-content {
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    max-width: 90vw; /* Adjust the maximum width as needed */
-    max-height: 100vh; /* Adjust the maximum height to fill the entire viewport height */
-    overflow: auto; /* Add scrolling if content exceeds max height */
+    max-width: 90vw;
+    max-height: 100vh;
+    overflow: auto;
 }
 
 .full-image {
-    max-width: 100%; /* Adjust the maximum width as needed */
-    max-height: 100%; /* Adjust the maximum height as needed */
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .popup-options {
@@ -40,13 +40,13 @@
     margin-top: 10px;
   }
   .highlight-text {
-    color: rgb(0, 0, 0); /* Text color */
-    padding: 6px 8px; /* Padding around the highlighted text */
-    border-radius: 5px; /* Rounded corners for the highlighted text */
+    color: rgb(0, 0, 0);
+    padding: 6px 8px;
+    border-radius: 5px;
   }
 
   .image-container {
-    margin-top: 10px; /* Adjust as needed */
+    margin-top: 10px;
     text-align: center;
   }
   
@@ -100,12 +100,12 @@
   }
   
   .description-content p.show-full-text {
-    -webkit-line-clamp: initial; /* Show all lines */
+    -webkit-line-clamp: initial;
   }
   
   .show-more-btn {
     background: none;
     border: none;
     cursor: pointer;
-    color: blue; /* Customize the button color as needed */
+    color: blue;
   }
