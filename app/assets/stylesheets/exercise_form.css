@@ -84,18 +84,18 @@ select {
 }
 
 .info-box {
-  display: none;
+  
   position: absolute;
-  max-width: 500px;  /* Increase the maximum width */
-  min-width: 150px;  /* Set a minimum width */
-  top: 100%;  /* Position the info box below the image */
+  max-width: 500px;
+  min-width: 150px;
+  top: 100%;
   left: 50%;
-  transform: translateX(-50%);  /* Center the info box horizontally */
+  transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
-  padding: 10px;  /* Increase padding for better readability */
+  padding: 10px;
   border-radius: 5px;
-  white-space: normal;  /* Allow text to wrap */
+  white-space: normal;
   z-index: 10;
 }
 
