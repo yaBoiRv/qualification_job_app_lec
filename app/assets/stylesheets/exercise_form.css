@@ -84,7 +84,7 @@ select {
 }
 
 .info-box {
-  
+  display: none;
   position: absolute;
   max-width: 500px;
   min-width: 150px;
