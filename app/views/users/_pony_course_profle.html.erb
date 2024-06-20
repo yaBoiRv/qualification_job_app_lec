@@ -50,9 +50,9 @@
       <div >
         <p class="font-bold mr-2 inline-block">Atzīmēt novietojumu kā:</p>
         <% if pony_course_user.used %>
-          <%= link_to "Izmantots", mark_unused_pony_course_path(pony_course_user.pony_course), method: :get, class: "bg-orange-500 text-white rounded-full py-2 px-4 mr-2 inline-block" %>
+          <%= link_to "Neizmantots", mark_unused_pony_course_path(pony_course_user.pony_course), method: :get, class: "bg-orange-500 text-white rounded-full py-2 px-4 mr-2 inline-block" %>
         <% else %>
-          <%= link_to "Neizmantots", mark_used_pony_course_path(pony_course_user.pony_course), method: :get, class: "bg-green-500 text-white rounded-full py-2 px-4 mr-2 inline-block" %>
+          <%= link_to "Izmantots", mark_used_pony_course_path(pony_course_user.pony_course), method: :get, class: "bg-green-500 text-white rounded-full py-2 px-4 mr-2 inline-block" %>
         <% end %>
       </div>
     </div>
